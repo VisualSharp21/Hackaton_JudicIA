@@ -63,6 +63,9 @@ import {
   validateHumanDecision,
 } from './triage.js';
 import { handleCopilotRoute } from './copilot/routes.js';
+import { servicesForTenant } from './prevention/runtime.js';
+import { tenantStore, activeTenants } from './prevention/mysql-store.js';
+import { handlePreventionRoute, handleAgentRoute } from './prevention/routes.js';
 
 let feedbackEvaluationInProgress = false;
 const loginAttempts = new Map();
@@ -129,8 +132,13 @@ function clearLoginAttempts(req, email) {
   loginAttempts.delete(key);
 }
 
+const isPreventionPath = (pathname) =>
+  pathname.startsWith('/api/hearings') || pathname.startsWith('/api/prevention/') || pathname.startsWith('/api/operational-knowledge');
+
 function roleCanAccess(user, pathname, method) {
   const role = user.role;
+  // Central de Audiências: a autorização por recurso fica em prevention/routes.js.
+  if (isPreventionPath(pathname)) return true;
   if (role === 'tic') return true;
   if (method === 'GET' && pathname === '/api/bootstrap') return true;
 
@@ -180,6 +188,13 @@ export async function handle(req, res) {
     if (req.method === 'OPTIONS') {
       res.writeHead(204);
       return res.end();
+    }
+    // Agente da estação (tools/hearing-agent.ps1): sem sessão de navegador, autenticado por token da estação.
+    if (url.pathname.startsWith('/api/prevention/agent/')) {
+      const tenantId = url.searchParams.get('tenantId');
+      if (!/^[0-9a-f-]{36}$/i.test(tenantId || '') || !(await activeTenants()).includes(tenantId)) return send(res, 401, { error: 'Agente não autorizado.' });
+      setTenantContext(tenantId);
+      return await handleAgentRoute({ req, res, url, store: tenantStore(tenantId), bodyJson, send });
     }
     if (url.pathname === '/api/health' && req.method === 'GET') {
       let healthSession = null;
@@ -316,6 +331,16 @@ export async function handle(req, res) {
     if (!['GET', 'HEAD', 'OPTIONS'].includes(req.method)) {
       if (!originAllowed(origin) || !requireCsrf(req, currentSession))
         return send(res, 403, { error: 'Requisição bloqueada pela proteção contra CSRF.' });
+    }
+    if (isPreventionPath(url.pathname)) {
+      await handlePreventionRoute({
+        req, res, url, user, services: servicesForTenant(user.tenantId), bodyJson, send,
+        sessionValid: () => {
+          const current = getSession(req);
+          return current?.user.id === user.id && current.user.role === user.role;
+        },
+      });
+      return;
     }
     if (url.pathname.startsWith('/api/copilot/'))
       return handleCopilotRoute({
@@ -786,7 +811,9 @@ export async function handle(req, res) {
     }
     return send(res, 404, { error: 'API endpoint not found.' });
   } catch (error) {
-    console.error(`[${req.method} ${url.pathname}]`, error);
-    return send(res, 500, { error: error.message || 'Erro interno.' });
+    const status = Number.isInteger(error.status) && error.status >= 400 && error.status < 600 ? error.status : 500;
+    if (status >= 500) console.error(`[${req.method} ${url.pathname}]`, error);
+    if (res.headersSent) return res.end();
+    return send(res, status, { error: error.message || 'Erro interno.' });
   }
 }

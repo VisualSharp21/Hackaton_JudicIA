@@ -3,6 +3,7 @@ import { port as PORT, databaseConfig as DB } from './config.js';
 import { init } from './repository.js';
 import { handle } from './api.js';
 import { runWithTenantContext } from './tenant-context.js';
+import { startPreventionRuntime } from './prevention/runtime.js';
 
 try {
   init();
@@ -10,6 +11,8 @@ try {
   console.error('Falha ao inicializar o banco:', error.message);
   process.exit(1);
 }
+
+startPreventionRuntime();
 
 http
   .createServer((request, response) => {

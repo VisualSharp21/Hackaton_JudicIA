@@ -2,6 +2,8 @@
 <html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
+    <!-- A Central de Audiências usa /audiencias/<id>: os caminhos relativos partem da raiz. -->
+    <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#0f766e" />
     <title>Pulso TIC — Monitoramento e Suporte TIC</title>
@@ -10,6 +12,8 @@
     <link rel="stylesheet" href="theme.css" />
     <!-- Copilot Nível 1 (chat, cartões e teste de audiência). Usa os tokens de theme.css. -->
     <link rel="stylesheet" href="copilot.css" />
+    <!-- Central de Audiências. -->
+    <link rel="stylesheet" href="hearings.css" />
   </head>
   <body>
     <div id="loading-bar" class="loading-bar" role="status" aria-label="Carregando" hidden></div>
@@ -32,7 +36,7 @@
     </section>
     <div class="app-shell" hidden>
       <aside class="sidebar" aria-label="Navegação principal">
-        <a class="brand" href="#inicio" aria-label="Pulso TIC início"
+        <a class="brand" href="/audiencias/" data-action="hearing-home" aria-label="Pulso TIC início"
           ><span class="brand-mark">P</span
           ><span
             ><strong>Pulso<span class="brand-dot"> TIC</span></strong
@@ -41,7 +45,10 @@
         >
         <div class="nav-label">ESPAÇO DE TRABALHO</div>
         <nav class="nav-list">
-          <button class="nav-item active" data-view="inicio" data-roles="solicitante,tic">
+          <button class="nav-item active" data-view="hearings" data-roles="solicitante,tic,gestor">
+            <span class="nav-icon">◷</span>Central de Audiências
+          </button>
+          <button class="nav-item" data-view="inicio" data-roles="solicitante,tic">
             <span class="nav-icon">⌂</span>Atendimento
           </button>
           <button class="nav-item" data-view="dashboard" data-roles="tic,gestor">
@@ -101,7 +108,7 @@
       <main class="main-area">
         <header class="topbar">
           <div class="breadcrumbs">
-            <span>Pulso TIC</span><span class="crumb-sep">/</span><b id="page-crumb">Atendimento</b>
+            <span>Pulso TIC</span><span class="crumb-sep">/</span><b id="page-crumb">Central de Audiências</b>
           </div>
           <div class="top-actions">
             <span class="demo-tag"><span class="pulse"></span> CONECTANDO…</span
@@ -125,7 +132,8 @@
             </button>
           </div>
         </header>
-        <section class="view active" id="view-inicio">
+        <section class="view active" id="view-hearings" aria-label="Central de Audiências"></section>
+        <section class="view" id="view-inicio">
           <!-- Central de Atendimento: Copilot Nível 1 (public/pages/copilot-chat.js) -->
           <div class="copilot" id="copilot-root"></div>
         </section>

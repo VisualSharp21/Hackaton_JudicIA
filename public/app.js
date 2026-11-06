@@ -11,6 +11,7 @@ import { createCopilotChat } from './pages/copilot-chat.js';
 import { createMeetCheckPage } from './pages/meet-check.js';
 import { createCopilotSettingsPage } from './pages/copilot-settings.js';
 import { triageQuestionLabels } from './pages/triage-labels.js';
+import { createHearingsPage } from './pages/hearings.js';
 
 (() => {
   const $ = (s) => document.querySelector(s);
@@ -114,10 +115,12 @@ import { triageQuestionLabels } from './pages/triage-labels.js';
     tic: new Set(['inicio', 'dashboard', 'monitoring', 'tickets', 'incidents', 'integration', 'copilot-settings', 'quality', 'pilot', 'triage-settings', 'prediag', 'meet-check', 'detail']),
     gestor: new Set(['dashboard', 'monitoring', 'tickets', 'incidents', 'pilot', 'users', 'prediag', 'meet-check', 'detail']),
   };
+  // Central de Audiências: todos os perfis; o backend filtra as audiências de cada um.
+  Object.values(roleViews).forEach((views) => views.add('hearings'));
   const roleNames = { solicitante: 'Solicitante', tic: 'Equipe de TIC', gestor: 'Gestor' };
   /** Seções que podem viver no endereço (#secao) — as demais dependem de estado. */
   const DEEP_LINKABLE = new Set([
-    'inicio', 'dashboard', 'monitoring', 'tickets', 'incidents',
+    'hearings', 'inicio', 'dashboard', 'monitoring', 'tickets', 'incidents',
     'quality', 'pilot', 'integration', 'copilot-settings', 'triage-settings', 'users', 'prediag', 'meet-check',
   ]);
   const sharedPageContext = {
@@ -139,11 +142,13 @@ import { triageQuestionLabels } from './pages/triage-labels.js';
     monitoring: createMonitoringPage(pageContext),
     copilot: createCopilotChat({
       $, api, esc, toast, navigate, levelPt, categoryPt, systemPt,
+      isTechnical: () => state.currentUser?.role === 'tic',
       showTicketDetail: (ticket) => pages.detail.showDetail(state.cache.tickets.find((t) => t.id === ticket.id) || ticket),
       reload: () => reload(),
     }),
     meetCheck: createMeetCheckPage({ $, esc, toast, state, canUseCopilot: () => hasViewAccess('inicio'), openCopilotWithReport: (report) => pages.copilot.sendMeetReport(report) }),
     copilotSettings: createCopilotSettingsPage({ $, api, esc, toast }),
+    hearings: createHearingsPage({ $, api, esc, state, toast, openExistingView: (view) => openView(view) }),
   };
   const { renderDashboard, renderTickets, renderIncidents } = pages.tickets;
   const { renderQuality } = pages.quality;
@@ -175,9 +180,12 @@ import { triageQuestionLabels } from './pages/triage-labels.js';
     if (hasViewAccess('inicio')) await pages.copilot.init();
     // Respeita a seção do endereço (refresh / aba aberta direto numa seção);
     // se não houver uma válida para o perfil, cai no padrão.
+    // A Central mantém o próprio estado e o stream de atualizações enquanto a sessão durar.
+    void pages.hearings.mount().catch((error) => toast(error.message));
     const fromHash = window.location.hash.slice(1);
-    if (DEEP_LINKABLE.has(fromHash) && hasViewAccess(fromHash)) openView(fromHash);
-    else openView(user.role === 'gestor' ? 'dashboard' : 'inicio');
+    if (/^\/audiencias(?:\/|$)/.test(window.location.pathname)) navigate('hearings');
+    else if (DEEP_LINKABLE.has(fromHash) && hasViewAccess(fromHash)) openView(fromHash);
+    else openView('hearings');
   }
   async function initializeAuthentication() {
     try {
@@ -227,6 +235,13 @@ import { triageQuestionLabels } from './pages/triage-labels.js';
   function updateHealthTag() {
     const tag = $('.demo-tag');
     if (!tag || !state.health) return;
+    // Provedor/modelo de triagem é informação técnica: só a equipe de TIC vê.
+    if (state.currentUser?.role !== 'tic') {
+      const online = state.health.database === 'ok';
+      tag.title = '';
+      tag.innerHTML = `<span class="pulse" style="background:${online ? '#4aa986' : '#c34d50'}"></span> ${online ? 'SISTEMA ONLINE' : 'INSTABILIDADE NO SISTEMA'}`;
+      return;
+    }
     const providerName =
       state.health.decisionProvider === 'laya'
         ? 'Laya local'
@@ -257,6 +272,7 @@ import { triageQuestionLabels } from './pages/triage-labels.js';
     const el = $(`#view-${view}`);
     if (el) el.classList.add('active');
     const names = {
+      hearings: 'Central de Audiências',
       inicio: 'Atendimento · Copilot',
       'meet-check': 'Teste de audiência',
       'copilot-settings': 'Copilot (IA)',
@@ -277,7 +293,12 @@ import { triageQuestionLabels } from './pages/triage-labels.js';
     // refresh mantém o lugar e dá para abrir uma seção direto em outra aba.
     // As telas do fluxo (análise, autoatendimento, protocolo, detalhe) ficam de
     // fora porque dependem de estado em memória e abririam vazias.
-    if (DEEP_LINKABLE.has(view) && window.location.hash.slice(1) !== view) {
+    // A Central usa endereços próprios (/audiencias/<id>); ao sair dela, volta para a raiz.
+    if (view !== 'hearings' && /^\/audiencias(?:\/|$)/.test(window.location.pathname)) {
+      try { history.replaceState(null, '', `/#${view}`); } catch { /* sem histórico */ }
+    } else if (view === 'hearings' && /^\/audiencias(?:\/|$)/.test(window.location.pathname)) {
+      /* a Central controla o próprio endereço */
+    } else if (DEEP_LINKABLE.has(view) && window.location.hash.slice(1) !== view) {
       // Atualizar o endereço é cosmético: se o navegador recusar (contexto sem
       // history, file://), a navegação precisa seguir funcionando.
       try {
@@ -352,6 +373,7 @@ import { triageQuestionLabels } from './pages/triage-labels.js';
     } catch (error) {
       toast(error.message);
     } finally {
+      pages.hearings.disconnect();
       state.currentUser = null;
       window.pulsoSetCsrfToken('');
       pages.copilot.reset();
@@ -429,6 +451,7 @@ import { triageQuestionLabels } from './pages/triage-labels.js';
     }
   });
   window.addEventListener('pulso:unauthorized', () => {
+    pages.hearings.disconnect();
     state.currentUser = null;
     window.pulsoSetCsrfToken('');
     $('.app-shell').hidden = true;
@@ -447,6 +470,7 @@ import { triageQuestionLabels } from './pages/triage-labels.js';
   function openView(view) {
     if (!hasViewAccess(view)) return toast('Seu perfil não tem acesso a este módulo.');
     // A conversa do Copilot sobrevive à troca de seção; só "Novo atendimento" a encerra.
+    if (view === 'hearings') void pages.hearings.overview();
     if (view === 'inicio') pages.copilot.render();
     if (view === 'meet-check') renderMeetCheck();
     if (view === 'copilot-settings') void renderCopilotSettings();
@@ -464,6 +488,7 @@ import { triageQuestionLabels } from './pages/triage-labels.js';
   }
   document.addEventListener('click', (event) => {
     const action = event.target.closest('[data-action]')?.dataset.action;
+    if (action === 'hearing-home') { event.preventDefault(); openView('hearings'); }
     if (action === 'logout') void logout();
     if (action === 'home') goHome();
     if (action === 'save-evaluation-case') void saveEvaluationCase(event.target.closest('[data-request]')?.dataset.request);

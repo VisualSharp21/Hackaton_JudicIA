@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JUDICI.A — Check-up Pré-Audiência (Google Meet + Zabbix)</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --border: #30363d;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --primary: #238636;
+      --primary-hover: #2ea043;
+      --blue: #58a6ff;
+      --red: #f85149;
+      --yellow: #d29922;
+      --green: #3fb950;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      padding: 24px;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+    }
+    header h1 {
+      font-size: 24px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    header h1 span.badge {
+      background: #1f6feb33;
+      color: var(--blue);
+      border: 1px solid var(--blue);
+      font-size: 12px;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-weight: 500;
+    }
+    header p {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-top: 6px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr auto;
+      gap: 12px;
+      align-items: end;
+    }
+    @media (max-width: 700px) {
+      .form-grid { grid-template-columns: 1fr; }
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: var(--text-muted);
+    }
+
+    input, select {
+      width: 100%;
+      background: #0d1117;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.2);
+    }
+
+    button.btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+    button.btn:hover { background: var(--primary-hover); }
+    button.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    /* Grid de status das checagens */
+    .checks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .check-box {
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 14px;
+      position: relative;
+    }
+    .check-box.status-ok { border-color: var(--green); }
+    .check-box.status-warn { border-color: var(--yellow); }
+    .check-box.status-fail { border-color: var(--red); }
+    .check-box.status-loading { border-color: var(--blue); }
+
+    .check-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .check-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .pill {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+    .pill-pending { background: #30363d; color: var(--text-muted); }
+    .pill-ok { background: #23863633; color: var(--green); border: 1px solid var(--green); }
+    .pill-warn { background: #d2992233; color: var(--yellow); border: 1px solid var(--yellow); }
+    .pill-fail { background: #f8514933; color: var(--red); border: 1px solid var(--red); }
+
+    .check-detail {
+      font-size: 13px;
+      min-height: 38px;
+      color: var(--text);
+    }
+
+    /* Video preview e indicador de microfone */
+    .media-preview-container {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 16px;
+      margin-top: 14px;
+      background: #0d1117;
+      border-radius: 6px;
+      padding: 12px;
+      border: 1px solid var(--border);
+    }
+    @media (max-width: 600px) {
+      .media-preview-container { grid-template-columns: 1fr; }
+    }
+    video#webcam-preview {
+      width: 100%;
+      height: 140px;
+      background: #000;
+      border-radius: 4px;
+      object-fit: cover;
+      transform: scaleX(-1);
+    }
+    .meter-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 8px;
+    }
+    .meter-bar-wrapper {
+      height: 12px;
+      background: #21262d;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .meter-bar {
+      height: 100%;
+      width: 0%;
+      background: var(--green);
+      transition: width 0.08s ease, background 0.2s;
+    }
+
+    /* JSON Output Card */
+    pre.json-output {
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 14px;
+      color: #79c0ff;
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 12px;
+      overflow-x: auto;
+      max-height: 380px;
+    }
+
+    .overall-banner {
+      padding: 12px 16px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      display: none;
+      align-items: center;
+      gap: 12px;
+      font-weight: 600;
+      font-size: 15px;
+    }
+    .overall-banner.ok { background: #23863622; border: 1px solid var(--green); color: var(--green); }
+    .overall-banner.warn { background: #d2992222; border: 1px solid var(--yellow); color: var(--yellow); }
+    .overall-banner.fail { background: #f8514922; border: 1px solid var(--red); color: var(--red); }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>JUDICI.A — Check-up de Audiência <span class="badge">Protótipo Isolado</span></h1>
+    <p>Verificação pré-audiência com coleta nativa de periféricos pelo navegador (sem agente) e correlação de telemetria de rede Zabbix.</p>
+  </header>
+
+  <!-- FORMULÁRIO DE ENTRADA -->
+  <div class="card">
+    <div class="form-grid">
+      <div>
+        <label for="meet-url">Link ou Código do Google Meet</label>
+        <input id="meet-url" type="text" placeholder="ex.: https://meet.google.com/abc-defg-hij ou abc-defg-hij" value="https://meet.google.com/jxz-kqmn-yuv" />
+      </div>
+      <div>
+        <label for="comarca-select">Comarca / Polo (Zabbix Host)</label>
+        <select id="comarca-select">
+          <option value="belem" data-lat="12" data-loss="0.0">Belém (Sede - Fórum Cível)</option>
+          <option value="maraba" data-lat="38" data-loss="0.2">Marabá (Vara Única)</option>
+          <option value="santarem" data-lat="45" data-loss="0.5">Santarém (Fórum Central)</option>
+          <option value="breves" data-lat="165" data-loss="7.5" selected>Breves (Link Satélite / Instável)</option>
+          <option value="paragominas" data-lat="29" data-loss="0.0">Paragominas (1ª Vara)</option>
+        </select>
+      </div>
+      <div>
+        <button id="btn-run" class="btn" onclick="executarCheckup()">
+          <span>▶</span> Iniciar Teste
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BANNER DE RESULTADO GERAL -->
+  <div id="overall-banner" class="overall-banner"></div>
+
+  <!-- GRID DE VERIFICAÇÕES -->
+  <div class="checks-grid">
+    <!-- 1. Google Meet -->
+    <div id="card-meet" class="check-box">
+      <div class="check-header">
+        <span class="check-title">1. Link Meet</span>
+        <span id="pill-meet" class="pill pill-pending">Aguardando</span>
+      </div>
+      <div id="detail-meet" class="check-detail">Validação da URL e formato do código da sala.</div>
+    </div>
+
+    <!-- 2. Câmera -->
+    <div id="card-camera" class="check-box">
+      <div class="check-header">
+        <span class="check-title">2. Câmera</span>
+        <span id="pill-camera" class="pill pill-pending">Aguardando</span>
+      </div>
+      <div id="detail-camera" class="check-detail">Detecção de driver de vídeo via navegador.</div>
+    </div>
+
+    <!-- 3. Microfone -->
+    <div id="card-mic" class="check-box">
+      <div class="check-header">
+        <span class="check-title">3. Microfone</span>
+        <span id="pill-mic" class="pill pill-pending">Aguardando</span>
+      </div>
+      <div id="detail-mic" class="check-detail">Detecção de áudio e nível de decibéis.</div>
+    </div>
+
+    <!-- 4. Zabbix (Rede) -->
+    <div id="card-zabbix" class="check-box">
+      <div class="check-header">
+        <span class="check-title">4. Rede (Zabbix)</span>
+        <span id="pill-zabbix" class="pill pill-pending">Aguardando</span>
+      </div>
+      <div id="detail-zabbix" class="check-detail">Latência e perda de pacotes da comarca.</div>
+    </div>
+  </div>
+
+  <!-- PRÉ-VISUALIZAÇÃO DE DISPOSITIVOS -->
+  <div class="card" id="media-card" style="display: none;">
+    <div class="card-title">
+      <span>Dispositivos em Teste (Fechamento automático em 3 segundos)</span>
+      <span id="test-timer" style="font-size: 12px; color: var(--yellow);">Testando...</span>
+    </div>
+    <div class="media-preview-container">
+      <div>
+        <video id="webcam-preview" autoplay playsinline muted></video>
+      </div>
+      <div class="meter-container">
+        <label style="margin: 0;">Nível do Microfone (Fale algo durante o teste):</label>
+        <div class="meter-bar-wrapper">
+          <div id="audio-meter" class="meter-bar"></div>
+        </div>
+        <p id="audio-detected-label" style="font-size: 12px; color: var(--text-muted);">Aguardando sinal de voz...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAÍDA JSON GERADA -->
+  <div class="card">
+    <div class="card-title">
+      <span>Saída Estruturada (Payload JSON)</span>
+      <button class="btn" style="background: #21262d; border: 1px solid var(--border); font-size: 12px; padding: 4px 10px;" onclick="copiarJson()">
+        Copiar JSON
+      </button>
+    </div>
+    <pre id="json-output" class="json-output">// O JSON do laudo de audiência será impresso aqui ao final do teste.</pre>
+  </div>
+</div>
+
+<script>
+  let mediaStream = null;
+  let audioContext = null;
+  let analyser = null;
+  let micAnimFrame = null;
+  let maxAudioVolume = 0;
+
+  function extrairCodigoMeet(input) {
+    const limpo = String(input || '').trim();
+    const regex = /([a-z]{3}-[a-z]{4}-[a-z]{3})/i;
+    const match = limpo.match(regex);
+    return match ? match[1].toLowerCase() : null;
+  }
+
+  function setPill(id, status, text) {
+    const pill = document.getElementById(`pill-${id}`);
+    const card = document.getElementById(`card-${id}`);
+    pill.className = `pill pill-${status}`;
+    pill.textContent = text;
+    card.className = `check-box status-${status}`;
+  }
+
+  async function testarDispositivosNavegador() {
+    maxAudioVolume = 0;
+    document.getElementById('media-card').style.display = 'block';
+    const videoElem = document.getElementById('webcam-preview');
+    const audioMeter = document.getElementById('audio-meter');
+    const audioLabel = document.getElementById('audio-detected-label');
+
+    let camResult = { ok: false, label: 'Nenhuma câmera detectada', detail: '' };
+    let micResult = { ok: false, label: 'Nenhum microfone detectado', detail: '', peakLevel: 0 };
+
+    try {
+      mediaStream = await navigator.mediaDevices.getUserMedia({
+        video: { width: 640, height: 480 },
+        audio: true
+      });
+
+      // Video tracks
+      const videoTracks = mediaStream.getVideoTracks();
+      if (videoTracks.length > 0) {
+        videoElem.srcObject = mediaStream;
+        const cam = videoTracks[0];
+        camResult = {
+          ok: true,
+          label: cam.label || 'Câmera HD Padrão',
+          detail: 'Câmera operacional (resolução ativa)'
+        };
+      }
+
+      // Audio tracks + Analyser
+      const audioTracks = mediaStream.getAudioTracks();
+      if (audioTracks.length > 0) {
+        const mic = audioTracks[0];
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioContext.createAnalyser();
+        analyser.fftSize = 256;
+        const source = audioContext.createMediaStreamSource(mediaStream);
+        source.connect(analyser);
+
+        const dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+        const checkVolume = () => {
+          analyser.getByteFrequencyData(dataArray);
+          let sum = 0;
+          for (let i = 0; i < dataArray.length; i++) sum += dataArray[i];
+          const average = sum / dataArray.length;
+          const percentage = Math.min(100, Math.round((average / 128) * 100));
+
+          if (percentage > maxAudioVolume) maxAudioVolume = percentage;
+
+          audioMeter.style.width = percentage + '%';
+          if (percentage > 70) audioMeter.style.background = 'var(--red)';
+          else if (percentage > 10) audioMeter.style.background = 'var(--green)';
+          else audioMeter.style.background = 'var(--yellow)';
+
+          if (maxAudioVolume > 5) {
+            audioLabel.textContent = `Áudio detectado! Pico captado: ${maxAudioVolume}%`;
+            audioLabel.style.color = 'var(--green)';
+          }
+
+          micAnimFrame = requestAnimationFrame(checkVolume);
+        };
+        checkVolume();
+
+        micResult = {
+          ok: true,
+          label: mic.label || 'Microfone Integrado',
+          detail: 'Captura de áudio ativa'
+        };
+      }
+    } catch (err) {
+      if (err.name === 'NotAllowedError') {
+        camResult.detail = 'Permissão negada pelo usuário no navegador.';
+        micResult.detail = 'Permissão negada pelo usuário no navegador.';
+      } else {
+        camResult.detail = err.message || 'Erro ao inicializar câmera.';
+        micResult.detail = err.message || 'Erro ao inicializar microfone.';
+      }
+    }
+
+    // Deixa rodando por 3 segundos para teste visual e depois encerra os tracks
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+
+    if (micAnimFrame) cancelAnimationFrame(micAnimFrame);
+    if (audioContext) { try { await audioContext.close(); } catch {} }
+    if (mediaStream) {
+      mediaStream.getTracks().forEach((t) => t.stop());
+    }
+    document.getElementById('test-timer').textContent = 'Concluído';
+    micResult.peakLevel = maxAudioVolume;
+
+    return { camResult, micResult };
+  }
+
+  async function consultarZabbix(comarcaKey) {
+    const sel = document.getElementById('comarca-select');
+    const opt = sel.options[sel.selectedIndex];
+    const baseLat = parseFloat(opt.getAttribute('data-lat') || '25');
+    const baseLoss = parseFloat(opt.getAttribute('data-loss') || '0');
+
+    // Simula telemetria com leve variação
+    await new Promise((r) => setTimeout(r, 600));
+
+    const latency = (baseLat + (Math.random() * 4 - 2)).toFixed(1);
+    const packetLoss = baseLoss;
+    const isDegraded = packetLoss >= 5.0 || latency > 120;
+
+    return {
+      comarca: opt.text,
+      host: `gw-${comarcaKey}.tjpa.jus.br`,
+      status: isDegraded ? 'WARNING' : 'OPTIMAL',
+      latencyMs: Number(latency),
+      packetLossPct: Number(packetLoss),
+      zabbixTrigger: isDegraded ? 'ALERTA: Perda de pacotes elevada no link da comarca' : 'OK: Latência e link nominais'
+    };
+  }
+
+  async function executarCheckup() {
+    const btn = document.getElementById('btn-run');
+    btn.disabled = true;
+
+    // Reset banners
+    const banner = document.getElementById('overall-banner');
+    banner.style.display = 'none';
+
+    // 1. Validar Google Meet
+    setPill('meet', 'loading', 'Validando');
+    const rawUrl = document.getElementById('meet-url').value;
+    const meetingCode = extrairCodigoMeet(rawUrl);
+
+    let meetStatus = { valid: false, code: meetingCode };
+    if (meetingCode) {
+      setPill('meet', 'ok', 'Válido');
+      document.getElementById('detail-meet').innerHTML = `Código: <code>${meetingCode}</code><br><span style="color:var(--green)">✓ Formato Meet verificado</span>`;
+      meetStatus.valid = true;
+    } else {
+      setPill('meet', 'fail', 'Inválido');
+      document.getElementById('detail-meet').innerHTML = `<span style="color:var(--red)">✗ Link ou formato de código inválido</span>`;
+    }
+
+    // 2 & 3. Testar Câmera e Microfone pelo Navegador
+    setPill('camera', 'loading', 'Testando');
+    setPill('mic', 'loading', 'Testando');
+    document.getElementById('detail-camera').textContent = 'Aguardando autorização do navegador...';
+    document.getElementById('detail-mic').textContent = 'Testando captação de decibéis...';
+
+    const { camResult, micResult } = await testarDispositivosNavegador();
+
+    if (camResult.ok) {
+      setPill('camera', 'ok', 'OK');
+      document.getElementById('detail-camera').innerHTML = `<b>${camResult.label}</b><br><span style="color:var(--green)">✓ Câmera operacional</span>`;
+    } else {
+      setPill('camera', 'fail', 'Falha');
+      document.getElementById('detail-camera').innerHTML = `<span style="color:var(--red)">✗ ${camResult.detail}</span>`;
+    }
+
+    if (micResult.ok) {
+      const micStatus = micResult.peakLevel > 0 ? 'ok' : 'warn';
+      const micLabel = micResult.peakLevel > 0 ? 'OK' : 'Sem Som';
+      setPill('mic', micStatus, micLabel);
+      document.getElementById('detail-mic').innerHTML = `<b>${micResult.label}</b><br>${micResult.peakLevel > 0 ? `<span style="color:var(--green)">✓ Áudio captado (Pico: ${micResult.peakLevel}%)</span>` : `<span style="color:var(--yellow)">⚠ Microfone detectado, mas não captou voz</span>`}`;
+    } else {
+      setPill('mic', 'fail', 'Falha');
+      document.getElementById('detail-mic').innerHTML = `<span style="color:var(--red)">✗ ${micResult.detail}</span>`;
+    }
+
+    // 4. Consultar Zabbix
+    setPill('zabbix', 'loading', 'Consultando');
+    document.getElementById('detail-zabbix').textContent = 'Lendo métricas de link no Zabbix...';
+    const comarcaKey = document.getElementById('comarca-select').value;
+    const zabbixResult = await consultarZabbix(comarcaKey);
+
+    if (zabbixResult.status === 'OPTIMAL') {
+      setPill('zabbix', 'ok', 'Estável');
+      document.getElementById('detail-zabbix').innerHTML = `Latência: <b>${zabbixResult.latencyMs} ms</b> | Perda: <b>${zabbixResult.packetLossPct}%</b><br><span style="color:var(--green)">✓ Link nominal</span>`;
+    } else {
+      setPill('zabbix', 'warn', 'Instável');
+      document.getElementById('detail-zabbix').innerHTML = `Latência: <b>${zabbixResult.latencyMs} ms</b> | Perda: <b style="color:var(--red)">${zabbixResult.packetLossPct}%</b><br><span style="color:var(--yellow)">⚠ ${zabbixResult.zabbixTrigger}</span>`;
+    }
+
+    // Veredito Geral
+    const isCritical = !meetStatus.valid || !camResult.ok || !micResult.ok;
+    const isWarning = zabbixResult.status !== 'OPTIMAL' || micResult.peakLevel === 0;
+
+    let overallStatus = 'READY';
+    let bannerClass = 'ok';
+    let bannerMsg = '✔ PRONTO PARA A AUDIÊNCIA — Todos os periféricos e link de rede validados.';
+
+    if (isCritical) {
+      overallStatus = 'BLOCKED';
+      bannerClass = 'fail';
+      bannerMsg = '✖ IMPEDIMENTO DETECTADO — Falha de câmera, microfone ou link da reunião. Acione a TIC antes de iniciar.';
+    } else if (isWarning) {
+      overallStatus = 'WARNING';
+      bannerClass = 'warn';
+      bannerMsg = '⚠ ATENÇÃO — A reunião pode iniciar, mas há instabilidade de rede ou áudio baixo reportado pela telemetria.';
+    }
+
+    banner.className = `overall-banner ${bannerClass}`;
+    banner.textContent = bannerMsg;
+    banner.style.display = 'flex';
+
+    // Montar o JSON estruturado final
+    const finalReport = {
+      schema: "judicia-audiencia-checkup-v1",
+      checkedAt: new Date().toISOString(),
+      overallStatus: overallStatus,
+      meeting: {
+        rawUrl: rawUrl,
+        code: meetingCode,
+        isValid: meetStatus.valid
+      },
+      peripherals: {
+        camera: {
+          detected: camResult.ok,
+          label: camResult.label,
+          status: camResult.ok ? "OPERATIONAL" : "FAILED"
+        },
+        microphone: {
+          detected: micResult.ok,
+          label: micResult.label,
+          audioDetected: micResult.peakLevel > 0,
+          peakLevelPct: micResult.peakLevel,
+          status: micResult.ok ? (micResult.peakLevel > 0 ? "OPERATIONAL" : "SILENT") : "FAILED"
+        }
+      },
+      networkTelemetryZabbix: zabbixResult
+    };
+
+    document.getElementById('json-output').textContent = JSON.stringify(finalReport, null, 2);
+    btn.disabled = false;
+  }
+
+  function copiarJson() {
+    const text = document.getElementById('json-output').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      alert('JSON copiado para a área de transferência!');
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -188,7 +188,7 @@ export function renderSessionLog(session, machine) {
       continue;
     }
     if (line.includes('{user_message_1}')) {
-      for (const pair of pairs) out.push(`- **Usuário:** \`${one(pair.user)}\``, `- **Hermes Copilot:** \`${one(pair.agent)}\``);
+      for (const pair of pairs) out.push(`- **Usuário:** \`${one(pair.user)}\``, `- **Copilot:** \`${one(pair.agent)}\``);
       continue;
     }
     if (line.includes('{agent_message_1}')) continue;

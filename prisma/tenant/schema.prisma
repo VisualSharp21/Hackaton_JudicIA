@@ -2,6 +2,33 @@ datasource db {
   provider = "mysql"
 }
 
+model PreventionMutex {
+  id Int @id
+  @@map("prevention_mutex")
+}
+
+model PreventionRecord {
+  kind String @db.VarChar(32)
+  id String @db.VarChar(191)
+  hearingId String? @map("hearing_id") @db.VarChar(191)
+  status String? @db.VarChar(64)
+  dueAt BigInt? @map("due_at")
+  payload Json
+  @@id([kind, id])
+  @@index([kind, status, dueAt], map: "prevention_due")
+  @@index([hearingId], map: "prevention_hearing")
+  @@map("prevention_records")
+}
+
+model PreventionAudit {
+  id String @id @db.Char(36)
+  hearingId String @map("hearing_id") @db.VarChar(191)
+  createdAt BigInt @map("created_at")
+  payload Json
+  @@index([hearingId, createdAt], map: "prevention_audit_hearing")
+  @@map("prevention_audit")
+}
+
 model AppUser {
   id           String       @id @db.Char(36)
   tenantId     String?      @map("tenant_id") @db.Char(36)

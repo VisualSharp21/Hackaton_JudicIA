@@ -33,6 +33,9 @@ function storage(kind) {
 
 export function createCopilotChat(ctx) {
   const { $, api, esc, toast, navigate, levelPt, categoryPt, systemPt, showTicketDetail, reload } = ctx;
+  // Motor, modelo e provedor de triagem só aparecem para quem é técnico (TIC).
+  // Para os demais perfis o Copilot é só "o Copilot".
+  const technical = () => Boolean(ctx.isTechnical?.());
   const S = {
     ready: false,
     machines: [],
@@ -269,6 +272,12 @@ export function createCopilotChat(ctx) {
       el.innerHTML = '<span class="cp-dot"></span> Conectando ao Copilot…';
       return;
     }
+    if (!technical()) {
+      el.className = `cp-engine ${engine.mode === 'indisponivel' ? 'is-down' : 'is-llm'}`;
+      el.title = '';
+      el.innerHTML = `<span class="cp-dot"></span><span><b>${engine.mode === 'indisponivel' ? 'Copilot indisponível' : 'Copilot online'}</b></span>`;
+      return;
+    }
     const llm = engine.mode === 'llm';
     el.className = `cp-engine ${llm ? 'is-llm' : engine.mode === 'indisponivel' ? 'is-down' : 'is-rules'}`;
     el.title = llm
@@ -356,7 +365,7 @@ export function createCopilotChat(ctx) {
           <ol class="cp-flow" aria-label="Como o atendimento funciona">
             <li><b>Estação</b><span>hardware e inventário</span></li>
             <li><b>Conversa</b><span>relato em linguagem natural</span></li>
-            <li><b>Laya</b><span>categoria, urgência e fila</span></li>
+            <li><b>Triagem</b><span>categoria, urgência e fila</span></li>
             <li><b>Solução</b><span>passo a passo no seu SO</span></li>
             <li><b>Ferramentas</b><span>teste de audiência</span></li>
             <li><b>GLPI</b><span>chamado enriquecido</span></li>
@@ -371,13 +380,13 @@ export function createCopilotChat(ctx) {
   function triageStrip(t, { compact = false } = {}) {
     if (!t) return '';
     if (compact)
-      return `<div class="cp-triage is-compact" aria-label="Classificação do Laya"><span class="cp-triage-title">Triagem do Laya</span><span>mantida · prioridade <span class="priority ${PRIORITY_CLASS[t.prioridade] || ''}">${esc(levelPt[t.prioridade] || t.prioridade)}</span> · fila ${esc(t.fila)}</span></div>`;
+      return `<div class="cp-triage is-compact" aria-label="Classificação do chamado"><span class="cp-triage-title">Triagem</span><span>mantida · prioridade <span class="priority ${PRIORITY_CLASS[t.prioridade] || ''}">${esc(levelPt[t.prioridade] || t.prioridade)}</span> · fila ${esc(t.fila)}</span></div>`;
     const chip = (label, value, cls = '') => `<span class="cp-tchip ${cls}"><small>${label}</small>${value}</span>`;
     const rules = (t.regrasAplicadas || []).map((r) => `<li><b>${esc(r.efeito)}</b> — ${esc(r.descricao)}</li>`).join('');
     const status = t.statusTriagem === 'READY' ? 'pronta' : t.statusTriagem === 'NEEDS_REVIEW' ? 'a confirmar pela TIC' : 'fora do escopo';
     return `
-      <div class="cp-triage" aria-label="Classificação do Laya">
-        <div class="cp-triage-head"><span class="cp-triage-title">Triagem do Laya</span><span class="cp-triage-meta" title="Provedor de decisão">${esc(t.provedor)}${t.layaIndisponivel ? ' (Laya indisponível: classificador local)' : ''} · ${esc(status)}${t.confianca !== null ? ` · confiança ${t.confianca}%` : ''}</span></div>
+      <div class="cp-triage" aria-label="Classificação do chamado">
+        <div class="cp-triage-head"><span class="cp-triage-title">${technical() ? 'Triagem do Laya' : 'Triagem'}</span><span class="cp-triage-meta"${technical() ? ' title="Provedor de decisão"' : ''}>${technical() ? `${esc(t.provedor)}${t.layaIndisponivel ? ' (Laya indisponível: classificador local)' : ''} · ` : ''}${esc(status)}${t.confianca !== null ? ` · confiança ${t.confianca}%` : ''}</span></div>
         <div class="cp-triage-chips">
           ${chip('Categoria', esc(categoryPt[t.categoria] || t.categoria))}
           ${chip('Sistema', esc(systemPt[t.sistema] || t.sistema))}
@@ -393,7 +402,9 @@ export function createCopilotChat(ctx) {
 
   function solutionCard(s) {
     if (!s) return '';
-    const origin = { base: 'Base procedural Hermes', llm: 'Resposta da LLM', laudo: 'Laudo do teste', roteiro: 'Roteiro geral' }[s.origem] || 'Copilot';
+    const origin = technical()
+      ? { base: 'Base procedural Hermes', llm: 'Resposta da LLM', laudo: 'Laudo do teste', roteiro: 'Roteiro geral' }[s.origem] || 'Copilot'
+      : { base: 'Base de procedimentos', llm: 'Copilot', laudo: 'Laudo do teste', roteiro: 'Roteiro geral' }[s.origem] || 'Copilot';
     return `
       <section class="cp-card cp-solution" aria-label="Solução recomendada">
         <header><span class="cp-card-icon" aria-hidden="true">🛠</span><div><small>SOLUÇÃO RECOMENDADA · ${esc(origin)}</small><h3>${esc(s.titulo)}</h3></div><span class="cp-os" title="Passos adaptados ao sistema operacional da estação">${s.familiaSo === 'linux' ? '🐧' : '⊞'} ${esc(s.so)}</span></header>
@@ -461,7 +472,7 @@ export function createCopilotChat(ctx) {
     const done = tool.status === 'concluido';
     return `
       <section class="cp-card cp-tool" data-run="${esc(tool.runId || '')}" aria-label="Diagnóstico de audiência virtual">
-        <header><span class="cp-card-icon" aria-hidden="true">📹</span><div><small>FERRAMENTA · run_meet_check${tool.origem === 'llm' ? ' · acionada pela LLM' : ''}</small><h3>Diagnóstico de Audiência Virtual</h3></div></header>
+        <header><span class="cp-card-icon" aria-hidden="true">📹</span><div><small>${technical() ? `FERRAMENTA · run_meet_check${tool.origem === 'llm' ? ' · acionada pela LLM' : ''}` : 'TESTE DE AUDIÊNCIA'}</small><h3>Diagnóstico de Audiência Virtual</h3></div></header>
         <p class="cp-tool-link">${tool.meetUrl ? `Link identificado: <a href="${esc(tool.meetUrl)}" target="_blank" rel="noopener noreferrer">${esc(tool.meetUrl)}</a>${tool.codigoPadrao === false ? ' <span class="cp-warn">código fora do padrão xxx-yyyy-zzz</span>' : ''}` : 'Nenhum link do Meet informado — o teste verifica câmera, microfone e rede desta estação.'}</p>
         ${done ? meetReportSummary(tool.laudo || {}) : `
           <div class="cp-tool-actions"><button type="button" class="button button-primary" data-cp="meet-run" data-run="${esc(tool.runId || '')}" data-url="${esc(tool.meetUrl || '')}"><span class="button-label">Executar Teste Rápido de Microfone &amp; Câmera</span></button>
@@ -487,7 +498,7 @@ export function createCopilotChat(ctx) {
   }
 
   function engineNote(engine) {
-    if (!engine) return '';
+    if (!engine || !technical()) return '';
     if (engine.mode === 'llm')
       return `<p class="cp-engine-note">Respondido por ${esc(engine.providerLabel || engine.provider)} · ${esc(engine.model)}${engine.ferramentas?.length ? ` · ferramentas: ${engine.ferramentas.map(esc).join(', ')}` : ''}${engine.toolMode ? ` · tool calling ${esc(engine.toolMode)}` : ''}</p>`;
     return `<p class="cp-engine-note">Motor de regras local${engine.fallback ? ` · fallback: ${esc(engine.motivo || 'LLM indisponível')}` : ''}</p>`;
@@ -637,7 +648,7 @@ export function createCopilotChat(ctx) {
     S.busy = true;
     if (userEntry) S.entries.push(userEntry);
     const m = machine();
-    S.entries.push({ kind: 'typing', text: `Analisando a estação ${m?.id || ''}, classificando com o Laya e consultando os precedentes…` });
+    S.entries.push({ kind: 'typing', text: `Analisando a estação ${m?.id || ''}, ${technical() ? 'classificando com o Laya' : 'classificando o problema'} e consultando os precedentes…` });
     renderLog();
     renderComposerState();
     try {

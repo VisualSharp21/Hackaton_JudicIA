@@ -31,7 +31,7 @@ export function createMockTicketingAdapter() {
       const description = content ? `${title ? `${title}\n\n` : ''}${content}` : request.description;
 
       queryRaw(
-        `INSERT INTO tickets(id,protocol,request_id,description,category,system,impact,urgency,priority,assigned_queue,confidence,synthetic) VALUES(${sqlValue(id)},${sqlValue(protocol)},${sqlValue(request.id)},${sqlValue(description)},${sqlValue(decision.category)},${sqlValue(decision.system)},${sqlValue(decision.impact)},${sqlValue(decision.urgency)},${sqlValue(priority)},${sqlValue(queue)},${Number(request.confidence) || 0},false)`,
+        `INSERT INTO tickets(id,protocol,request_id,description,category,system,impact,urgency,priority,assigned_queue,confidence,synthetic) VALUES(${sqlValue(id)},${sqlValue(protocol)},${sqlValue(request.id)},${sqlValue(description)},${sqlValue(decision.category)},${sqlValue(decision.system)},${sqlValue(decision.impact)},${sqlValue(decision.urgency)},${sqlValue(priority)},${sqlValue(queue)},${Number(request.confidence) || 0},${Boolean(request.synthetic)})`,
       );
       query(
         `UPDATE requests SET status='TICKET_CREATED',priority=${sqlValue(priority)},queue=${sqlValue(queue)} WHERE id=${sqlValue(request.id)}`,

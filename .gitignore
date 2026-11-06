@@ -7,3 +7,5 @@ evaluation/feedback.local.json
 
 # Metadados de download do Windows (ADS)
 *:Zone.Identifier
+.demo/
+data/hearings-demo.sqlite*

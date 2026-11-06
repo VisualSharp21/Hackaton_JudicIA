@@ -450,7 +450,7 @@ export async function runCopilotTurn({ state, machine, message = '', meetReport 
           so: osLabel(machine),
           familiaSo: machine.so.familia,
           passos: parsed.steps,
-          fonte: primary ? `Hermes Copilot (${llm.model}) com base em ${primary.procedure.fonte}` : `Hermes Copilot (${llm.model})`,
+          fonte: primary ? `Copilot, com base em ${primary.procedure.fonte}` : 'Copilot',
           escalarDireto: policy?.escalarDireto || false,
         };
       }

@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import { serviceDeadline } from './ticketing/service-deadline.js';
 import path from 'node:path';
 import { projectRoot, ticketingProvider, glpiConfig } from './config.js';
 import { currentTenantId, setTenantContext, DEFAULT_TENANT_ID } from './tenant-context.js';
@@ -584,13 +585,15 @@ export function articlesFor(category, system) {
   return queryJson(`SELECT COALESCE(JSON_ARRAYAGG(JSON_OBJECT('id',id,'title',title,'category',category,'system',system,'problem',problem,'solution',solution,'steps',JSON_EXTRACT(steps,'$')) ORDER BY CASE WHEN system=${sqlValue(system)} THEN 0 ELSE 1 END,id LIMIT 5),'[]') FROM knowledge_articles WHERE active AND (system=${sqlValue(system)} OR category=${sqlValue(category)})`);
 }
 export function listTickets(ownerId = null) {
+  const targets = getPilotConfiguration().targets;
   const ownerFilter = ownerId ? `WHERE r.created_by=${sqlValue(ownerId)}` : '';
   return queryJson(`SELECT COALESCE(JSON_ARRAYAGG(JSON_OBJECT(
     'id',t.id,'protocol',t.protocol,'requestId',t.request_id,'description',t.description,'category',t.category,'system',t.system,'impact',t.impact,'urgency',t.urgency,'priority',t.priority,'status',t.status,'queue',t.assigned_queue,'queueRouting',t.queue_routing,'glpiCategoryId',t.glpi_category_id,'confidence',t.confidence,'incidentId',t.incident_code,'createdAt',t.created_at,'locality',r.locality,
+    'firstResolvedAt',t.first_resolved_at,'firstAssignedAt',t.first_assigned_at,
     'integration',JSON_OBJECT('provider',CASE WHEN t.id LIKE 'GLPI-%' THEN 'glpi' ELSE 'mock' END,'mode',CASE WHEN t.id LIKE 'GLPI-%' THEN 'external' ELSE 'simulated' END,'displayName',CASE WHEN t.id LIKE 'GLPI-%' THEN 'GLPI 11' ELSE 'Conector simulado' END),
     'provider',CASE WHEN r.corrected_decision IS NOT NULL THEN 'human_correction' ELSE r.provider END,'articleId',COALESCE(JSON_UNQUOTE(JSON_EXTRACT(r.article_snapshot,'$.id')),r.article_id),'article',JSON_EXTRACT(r.article_snapshot,'$'),'decision',JSON_EXTRACT(COALESCE(r.corrected_decision,r.decision),'$'),'humanCorrected',r.corrected_decision IS NOT NULL,'synthetic',t.synthetic
   ) ORDER BY t.created_at DESC),'[]') FROM tickets t JOIN requests r ON r.id=t.request_id ${ownerFilter}`).map(
-    (ticket) => ({ ...ticket, confidence: Number(ticket.confidence) }),
+    (ticket) => ({ ...ticket, confidence: Number(ticket.confidence), serviceDeadline: serviceDeadline(ticket, targets) }),
   );
 }
 export function requestOwnedBy(requestId, userId) {

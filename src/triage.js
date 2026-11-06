@@ -34,7 +34,7 @@ export const TRIAGE_ROUTING_RULES = Object.freeze([
 ]);
 
 export const TRIAGE_CALIBRATION_RULES = Object.freeze({
-  technicalTerms: ['pje','sei','sistema','aplicativo','software','computador','notebook','desktop','pc','estacao de trabalho','impressora','imprimir','impressao','internet','wifi','wi-fi','rede','conexao','senha','login','autenticacao','e-mail','email','correio eletronico','navegador','vpn','teclado','mouse','monitor','scanner','certificado digital'],
+  technicalTerms: ['pje','sei','sistema','aplicativo','software','computador','notebook','desktop','pc','estacao de trabalho','impressora','imprimir','impressao','internet','wifi','wi-fi','rede','conexao','senha','login','autenticacao','e-mail','email','correio eletronico','navegador','vpn','teclado','mouse','monitor','scanner','certificado digital','camera','webcam','microfone','google meet','meet.google','videoconferencia'],
   outOfScopeTerms: ['advogado','prazo','recurso','peticao','processo judicial','processo','audiencia','sentenca','custas','juiz','decisao judicial','orientacao juridica','intimacao','comarca'],
   systemTerms: { PJE: ['pje'], SEI: ['sei'] },
   outOfScopeCategory: 'OTHER',
@@ -42,6 +42,7 @@ export const TRIAGE_CALIBRATION_RULES = Object.freeze({
   categoryRules: [
     { groups: [['impressora','imprimir','impressao','toner','fila de impressao']], category: 'PRINTING', system: 'PRINTER' },
     { groups: [['internet','wifi','wi-fi','rede','conexao','sem sinal','roteador']], category: 'NETWORK', system: 'INTERNET' },
+    { groups: [['camera','webcam','microfone','google meet','meet.google','videoconferencia']], category: 'HARDWARE', system: 'COMPUTER' },
     { groups: [['computador','notebook','desktop','pc','estacao de trabalho'], ['nao liga','nao inicia','travou','desliga','tela azul','muito lento','quebrou']], category: 'HARDWARE', system: 'COMPUTER' },
     { groups: [['e-mail','email','correio eletronico','outlook']], category: 'SYSTEM', system: 'EMAIL' },
     { groups: [['pje','sei'], ['senha','autenticacao','credencial','nao consigo entrar','nao consigo acessar','falha ao acessar','login']], category: 'ACCESS', systemFromText: true },
@@ -77,6 +78,7 @@ export const TRIAGE_CALIBRATION_RULES = Object.freeze({
     { terms: ['computador','notebook','estacao','nao liga'], category: 'HARDWARE', system: 'COMPUTER', confidence: 0.88 },
     { terms: ['senha','login','acessar','acesso','autenticacao'], category: 'ACCESS', system: 'UNKNOWN', confidence: 0.82 },
     { terms: ['email','e-mail','correio eletronico'], category: 'SYSTEM', system: 'EMAIL', confidence: 0.9 },
+    { terms: ['camera','webcam','microfone','google meet','meet.google','videoconferencia'], category: 'HARDWARE', system: 'COMPUTER', confidence: 0.92 },
   ],
   fallbackUrgencyTerms: ['urgente','prazo','audiencia','hoje','desde esta manha'],
 });

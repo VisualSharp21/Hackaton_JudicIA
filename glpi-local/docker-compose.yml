@@ -16,15 +16,15 @@ services:
       - "127.0.0.1:8080:80"
 
   db:
-    image: "mysql"
+    image: "mariadb:11.4"
     restart: "unless-stopped"
     volumes:
       - db_data:/var/lib/mysql
     environment:
-      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
-      MYSQL_DATABASE: ${GLPI_DB_NAME}
-      MYSQL_USER: ${GLPI_DB_USER}
-      MYSQL_PASSWORD: ${GLPI_DB_PASSWORD}
+      MARIADB_RANDOM_ROOT_PASSWORD: "yes"
+      MARIADB_DATABASE: ${GLPI_DB_NAME}
+      MARIADB_USER: ${GLPI_DB_USER}
+      MARIADB_PASSWORD: ${GLPI_DB_PASSWORD}
 
 volumes:
   glpi_data:

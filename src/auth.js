@@ -159,7 +159,11 @@ function requestCookie(req, name) {
  * Sem o header, cai no nome legado e o comportamento antigo continua valendo.
  */
 function requestSlot(req) {
-  const raw = String(req.headers['x-pulso-slot'] || '').trim();
+  // EventSource não envia headers: no stream da Central (GET) o slot vem em ?slot=.
+  let raw = String(req.headers['x-pulso-slot'] || '').trim();
+  if (!raw && req.method === 'GET') {
+    try { raw = new URL(req.url, 'http://localhost').searchParams.get('slot') || ''; } catch { raw = ''; }
+  }
   return /^[a-z0-9]{1,12}$/.test(raw) ? raw : '';
 }
 

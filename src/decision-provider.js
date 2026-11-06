@@ -28,6 +28,10 @@ export async function classifyWithProvider(description, questions, policy = {}) 
       signal: AbortSignal.timeout(120000),
     });
   } catch (error) {
+    if (isLaya || !apiKey) {
+      console.warn(`[Pulso TIC] Provedor de decisão offline (${error.message}). Usando classificador local de contingência.`);
+      return fallbackClassification(description, policy.calibrationRules, policy.thresholds);
+    }
     throw new Error(`Decision service unavailable: ${error.message}`);
   }
 

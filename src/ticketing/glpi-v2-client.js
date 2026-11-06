@@ -1,3 +1,5 @@
+import { glpiConfig as defaultGlpiConfig } from '../config.js';
+
 const REQUEST_TIMEOUT_MS = 12_000;
 
 function requiredConfig(glpiConfig) {
@@ -13,7 +15,7 @@ function requiredConfig(glpiConfig) {
   if (missing.length) throw new Error(`Configuração GLPI incompleta: ${missing.join(', ')}.`);
 }
 
-export function createGlpiV2Client(glpiConfig) {
+export function createGlpiV2Client(glpiConfig = defaultGlpiConfig) {
   let accessToken;
   let tokenExpiresAt = 0;
   let openApiDocument;

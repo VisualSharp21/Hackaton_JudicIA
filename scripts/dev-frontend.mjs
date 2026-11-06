@@ -27,7 +27,7 @@ http
       res.writeHead(400);
       return res.end('Bad request');
     }
-    const relativePath = pathname === '/' ? 'index.html' : pathname.replace(/^\/+/, '');
+    const relativePath = pathname === '/' || /^\/audiencias(?:\/[^/]+)?\/?$/.test(pathname) ? 'index.html' : pathname.replace(/^\/+/, '');
     const filePath = path.resolve(publicRoot, relativePath);
     if (!filePath.startsWith(`${publicRoot}${path.sep}`)) {
       res.writeHead(403);

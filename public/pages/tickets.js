@@ -1,18 +1,24 @@
+import { filterTicketQueue, liveDeadline, deadlineLabel } from './ticket-queue.js';
+import { incidentsMarkup, submitOperation, downloadJson } from './prevention-operations.js';
+
 export function createTicketPages(ctx) {
   const { $, api, esc, fmtTime, fmtDate, toast, systemPt, categoryPt, levelPt, ticketStatusPt, state } = ctx;
+  let queueTimer;
   function ticketRows(list) {
     if (!list.length)
-      return `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">▤</div><b>Nenhum chamado encontrado</b><p>As solicitações encaminhadas aparecerão aqui.</p></div></td></tr>`;
+      return `<tr><td colspan="9"><div class="empty-state"><div class="empty-icon">▤</div><b>Nenhum chamado encontrado</b><p>As solicitações encaminhadas aparecerão aqui.</p></div></td></tr>`;
     return list
       .map(
-        (t) =>
-          `<tr data-ticket="${esc(t.id)}"><td><strong>${esc(t.protocol)}</strong></td><td>${esc(t.locality || 'Não informada')}</td><td>${esc(systemPt[t.system] || t.system)}</td><td>${esc(categoryPt[t.category] || t.category)}</td><td><span class="priority ${t.priority.toLowerCase()}">${levelPt[t.priority]}</span></td><td><span class="queue-tag">${esc(t.queue)}</span></td><td>${esc(ticketStatusPt[t.status] || t.status || '—')}</td><td>${fmtTime(t.createdAt)}</td></tr>`,
+        (t) => {
+          const d = liveDeadline(t);
+          return `<tr data-ticket="${esc(t.id)}" data-sla="${esc(d.status)}"><td><strong>${esc(t.protocol)}</strong>${t.synthetic ? '<small> DEMO</small>' : ''}</td><td>${esc(t.locality || 'Não informada')}</td><td>${esc(systemPt[t.system] || t.system)}</td><td>${esc(categoryPt[t.category] || t.category)}</td><td><span class="priority ${t.priority.toLowerCase()}" title="${esc(`Impacto: ${levelPt[t.impact] || t.impact}; urgência: ${levelPt[t.urgency] || t.urgency}. Matriz configurada de triagem.`)}">${levelPt[t.priority]}</span></td><td><span class="queue-tag">${esc(t.queue)}</span></td><td>${esc(ticketStatusPt[t.status] || t.status || '—')}</td><td>${fmtTime(t.createdAt)}</td><td title="${esc(d.basis)}"><b>${esc(deadlineLabel[d.status] || d.status)}</b>${d.dueAt ? `<small> ${esc(fmtDate(d.dueAt))}</small>` : ''}</td></tr>`;
+        },
       )
       .join('');
   }
 
   function renderTable(list) {
-    return `<div class="panel"><div class="panel-head"><h3>Chamados recentes</h3><span>${list.length} registros · PostgreSQL</span></div><div class="table-wrap"><table><thead><tr><th>PROTOCOLO</th><th>COMARCA / MUNICÍPIO</th><th>SISTEMA</th><th>CATEGORIA</th><th>PRIORIDADE</th><th>FILA SUGERIDA</th><th>STATUS</th><th>HORÁRIO</th></tr></thead><tbody>${ticketRows(list)}</tbody></table></div></div>`;
+    return `<div class="panel"><div class="panel-head"><h3>Chamados</h3><span>${list.length} registros</span></div><div class="table-wrap"><table><thead><tr><th>PROTOCOLO</th><th>COMARCA / MUNICÍPIO</th><th>SISTEMA</th><th>CATEGORIA</th><th>PRIORIDADE</th><th>FILA SUGERIDA</th><th>STATUS</th><th>HORÁRIO</th><th>META DE RESOLUÇÃO</th></tr></thead><tbody>${ticketRows(list)}</tbody></table></div></div>`;
   }
 
   async function renderDashboard() {
@@ -50,7 +56,12 @@ export function createTicketPages(ctx) {
       const list = await api('/api/tickets');
       state.cache.tickets = list;
       $('#view-tickets').innerHTML =
-        `<div class="page-header"><div><div class="eyebrow"><span class="eyebrow-line"></span> FILA DE ATENDIMENTO</div><h1>Chamados</h1><p class="page-subtitle">Solicitações estruturadas e encaminhadas para a equipe responsável.</p></div><div class="action-row"><button class="button button-secondary" data-action="sync-tickets">Sincronizar status</button><button class="button button-primary" data-action="home">+ Nova solicitação</button></div></div>${renderTable(list)}`;
+        `<div class="page-header"><div><div class="eyebrow"><span class="eyebrow-line"></span> FILA DE ATENDIMENTO</div><h1>Chamados</h1><p class="page-subtitle">Prioridade pela matriz de impacto e urgência. Metas configuradas em Piloto e SLAs, em tempo corrido.</p></div><div class="action-row"><button class="button button-secondary" data-action="sync-tickets">Sincronizar status</button><button class="button button-primary" data-action="home">+ Nova solicitação</button></div></div><form class="ticket-filters" id="ticket-queue-filters"><input name="q" placeholder="Buscar protocolo, descrição, sistema…" aria-label="Buscar chamados"><select name="priority" aria-label="Prioridade"><option value="">Todas as prioridades</option>${Object.entries(levelPt).map(([v,t]) => `<option value="${esc(v)}">${esc(t)}</option>`).join('')}</select><select name="status" aria-label="Situação"><option value="">Todas as situações</option>${[...new Set(list.map((t) => t.status))].map((v) => `<option value="${esc(v)}">${esc(ticketStatusPt[v] || v)}</option>`).join('')}</select><select name="locality" aria-label="Comarca"><option value="">Todas as comarcas</option>${[...new Set(list.map((t) => t.locality).filter(Boolean))].map((v) => `<option>${esc(v)}</option>`).join('')}</select><select name="sla" aria-label="Prazo"><option value="">Todos os prazos</option><option value="AT_RISK">Próximos de vencer</option><option value="OVERDUE">Prazo excedido</option><option value="UNCONFIGURED">Sem meta</option></select><select name="sort" aria-label="Ordenação"><option value="priority">Prioridade</option><option value="deadline">Prazo</option><option value="newest">Mais recentes</option></select></form><div id="ticket-queue-table"></div>`;
+      const filters = $('#ticket-queue-filters');
+      const update = () => { $('#ticket-queue-table').innerHTML = renderTable(filterTicketQueue(list, Object.fromEntries(new FormData(filters)))); };
+      filters.oninput = update; filters.onchange = update; filters.onsubmit = (event) => event.preventDefault(); update();
+      clearInterval(queueTimer);
+      queueTimer = setInterval(() => { if (!filters.isConnected) clearInterval(queueTimer); else if ($('#view-tickets').classList.contains('active')) update(); }, 30000);
     } catch (e) {
       toast(e.message);
     }
@@ -58,7 +69,7 @@ export function createTicketPages(ctx) {
 
   async function renderIncidents() {
     try {
-      const list = await api('/api/incidents');
+      const [list, operations] = await Promise.all([api('/api/incidents'), api('/api/prevention/operations')]);
       state.cache.incidents = list;
       $('#view-incidents').innerHTML =
         `<div class="page-header"><div><div class="eyebrow"><span class="eyebrow-line"></span> AGRUPAMENTO AUTOMÁTICO</div><h1>Possíveis incidentes</h1><p class="page-subtitle">Padrão experimental: três chamados do mesmo sistema e categoria em 15 minutos.</p></div></div>${
@@ -78,6 +89,10 @@ export function createTicketPages(ctx) {
                 .join('')
             : `<div class="panel empty-state"><div class="empty-icon">◉</div><b>Nenhum padrão agrupado ainda</b><p>Quando houver pelo menos três chamados relacionados em 15 minutos, um possível incidente será criado.</p></div>`
         }`;
+      const host = document.createElement('div'); host.innerHTML = incidentsMarkup(operations.incidents || [], esc, state.currentUser?.role === 'tic');
+      $('#view-incidents').prepend(host);
+      host.onsubmit = async (event) => { if (!event.target.dataset.operationsForm) return; event.preventDefault(); try { await submitOperation(event.target, api); await renderIncidents(); } catch (error) { toast(error.message); } };
+      host.onclick = (event) => { const b = event.target.closest('[data-operations-action]'); if (b?.dataset.operationsAction === 'download-incident') downloadJson(operations.incidents.find((i) => i.id === b.dataset.id).report, 'judicia-pos-incidente.json'); };
     } catch (e) {
       toast(e.message);
     }

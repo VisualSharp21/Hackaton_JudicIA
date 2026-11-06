@@ -1,0 +1,22 @@
+datasource db {
+  provider = "mysql"
+}
+
+model Tenant {
+  id        String   @id @db.Char(36)
+  slug      String   @unique @db.VarChar(63)
+  name      String   @db.VarChar(120)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now()) @map("created_at") @db.DateTime(3)
+
+  @@map("tenants")
+}
+
+model TenantSession {
+  tokenHash String   @id @map("token_hash") @db.Char(64)
+  tenantId  String   @map("tenant_id") @db.Char(36)
+  expiresAt DateTime @map("expires_at") @db.DateTime(3)
+
+  @@index([expiresAt], map: "tenant_sessions_expiry_idx")
+  @@map("tenant_sessions")
+}

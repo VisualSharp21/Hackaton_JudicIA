@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0f766e" />
+    <title>Pulso TIC — Monitoramento e Suporte TIC</title>
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Identidade visual (base: Pulso TIC). Depois de styles.css de propósito. -->
+    <link rel="stylesheet" href="theme.css" />
+    <!-- Copilot Nível 1 (chat, cartões e teste de audiência). Usa os tokens de theme.css. -->
+    <link rel="stylesheet" href="copilot.css" />
+  </head>
+  <body>
+    <div id="loading-bar" class="loading-bar" role="status" aria-label="Carregando" hidden></div>
+    <section class="auth-screen" id="auth-screen" aria-labelledby="auth-title">
+      <div class="auth-card">
+        <div class="eyebrow"><span class="eyebrow-line"></span> Pulso TIC · SUPORTE TIC</div>
+        <h1 id="auth-title">Acesse sua conta</h1>
+        <p>Entre com a conta fornecida pela administração do sistema.</p>
+        <form id="login-form" autocomplete="on">
+          <label for="login-tenant">Identificador da organizacao</label>
+          <input id="login-tenant" name="tenantSlug" type="text" autocomplete="organization" maxlength="63" pattern="[A-Za-z0-9][A-Za-z0-9\-]{1,61}[A-Za-z0-9]" placeholder="Ex.: empresa-exemplo" required />
+          <label for="login-email">E-mail</label>
+          <input id="login-email" name="email" type="email" autocomplete="username" maxlength="254" required />
+          <label for="login-password">Senha</label>
+          <input id="login-password" name="password" type="password" autocomplete="current-password" maxlength="128" required />
+          <p id="auth-error" class="auth-error" role="alert" hidden></p>
+          <button id="login-button" class="button button-primary" type="submit">Entrar</button>
+        </form>
+      </div>
+    </section>
+    <div class="app-shell" hidden>
+      <aside class="sidebar" aria-label="Navegação principal">
+        <a class="brand" href="#inicio" aria-label="Pulso TIC início"
+          ><span class="brand-mark">P</span
+          ><span
+            ><strong>Pulso<span class="brand-dot"> TIC</span></strong
+            ><small>MONITORAMENTO E SUPORTE</small></span
+          ></a
+        >
+        <div class="nav-label">ESPAÇO DE TRABALHO</div>
+        <nav class="nav-list">
+          <button class="nav-item active" data-view="inicio" data-roles="solicitante,tic">
+            <span class="nav-icon">⌂</span>Atendimento
+          </button>
+          <button class="nav-item" data-view="dashboard" data-roles="tic,gestor">
+            <span class="nav-icon">▦</span>Visão geral
+          </button>
+          <button class="nav-item" data-view="monitoring" data-roles="tic,gestor">
+            <span class="nav-icon">◠</span>Monitoramento
+          </button>
+          <button class="nav-item" data-view="tickets" data-roles="solicitante,tic,gestor">
+            <span class="nav-icon">▤</span>Chamados
+            <span class="nav-count" id="nav-ticket-count">0</span>
+          </button>
+          <button class="nav-item" data-view="prediag" data-roles="solicitante,tic,gestor">
+            <span class="nav-icon">◈</span>Pré-diagnóstico
+          </button>
+          <button class="nav-item" data-view="meet-check" data-roles="solicitante,tic,gestor">
+            <span class="nav-icon">▶</span>Teste de audiência
+          </button>
+          <button class="nav-item" data-view="incidents" data-roles="tic,gestor">
+            <span class="nav-icon">◉</span>Incidentes
+            <span class="nav-count" id="nav-incident-count">0</span>
+          </button>
+          <button class="nav-item" data-view="integration" data-roles="tic">
+            <span class="nav-icon">⇄</span>Integração GLPI
+          </button>
+          <button class="nav-item" data-view="copilot-settings" data-roles="tic">
+            <span class="nav-icon">✦</span>Copilot (IA)
+          </button>
+          <button class="nav-item" data-view="quality" data-roles="tic">
+            <span class="nav-icon">✓</span>Qualidade
+          </button>
+          <button class="nav-item" data-view="pilot" data-roles="tic,gestor">
+            <span class="nav-icon">◷</span>Piloto e SLAs
+          </button>
+          <button class="nav-item" data-view="users" data-roles="gestor">
+            <span class="nav-icon">✉</span>Acessos
+          </button>
+          <button class="nav-item" data-view="triage-settings" data-roles="tic">
+            <span class="nav-icon">⚙</span>Configuração da triagem
+          </button>
+        </nav>
+        <div class="sidebar-bottom">
+          <div class="environment">
+            <span class="pulse"></span
+            ><span
+              ><b>Ambiente demonstrativo</b
+              ><small>Dados sintéticos · TJPA Hackathon 2026</small></span
+            >
+          </div>
+          <div class="user-chip" id="current-user-chip">
+            <div class="avatar" id="current-user-avatar">U</div>
+            <span><b id="current-user-name">Usuário</b><small id="current-user-role">Perfil</small></span>
+            <button class="logout-button" type="button" data-action="logout" aria-label="Encerrar sessão">Sair</button>
+          </div>
+        </div>
+      </aside>
+      <main class="main-area">
+        <header class="topbar">
+          <div class="breadcrumbs">
+            <span>Pulso TIC</span><span class="crumb-sep">/</span><b id="page-crumb">Atendimento</b>
+          </div>
+          <div class="top-actions">
+            <span class="demo-tag"><span class="pulse"></span> CONECTANDO…</span
+            ><button
+              class="icon-button"
+              id="theme-toggle"
+              type="button"
+              aria-pressed="false"
+              title="Alternar tema claro/escuro"
+              aria-label="Alternar tema claro ou escuro"
+            >
+              ☾
+            </button
+            ><button
+              class="icon-button"
+              id="reset-data"
+              title="Atualizar dados"
+              aria-label="Atualizar dados"
+            >
+              ↻
+            </button>
+          </div>
+        </header>
+        <section class="view active" id="view-inicio">
+          <!-- Central de Atendimento: Copilot Nível 1 (public/pages/copilot-chat.js) -->
+          <div class="copilot" id="copilot-root"></div>
+        </section>
+        <section class="view" id="view-dashboard"></section>
+        <section class="view" id="view-monitoring"></section>
+        <section class="view" id="view-tickets"></section>
+        <section class="view" id="view-incidents"></section>
+        <section class="view" id="view-quality"></section>
+        <section class="view" id="view-pilot"></section>
+        <section class="view" id="view-triage-settings"></section>
+        <section class="view" id="view-integration"></section>
+        <section class="view" id="view-detail"></section>
+        <section class="view" id="view-users"></section>
+        <section class="view" id="view-prediag"></section>
+        <section class="view" id="view-meet-check"></section>
+        <section class="view" id="view-copilot-settings"></section>
+        <footer class="app-footer">
+          <span>Pulso TIC <span class="footer-sep">·</span> Protótipo de suporte inteligente</span
+          ><span
+            >Dados sintéticos para demonstração <span class="footer-sep">·</span> Hackathon TJPA
+            2026</span
+          >
+        </footer>
+      </main>
+      <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    </div>
+    <script src="js/api.js"></script>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

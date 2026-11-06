@@ -1,0 +1,100 @@
+{
+  "action": "inventory",
+  "itemtype": "Computer",
+  "deviceid": "JUDICIA-DEMO-011",
+  "tag": "JUDICIA-DEMO",
+  "content": {
+    "versionclient": "JUDICIA-DEMO-1.0",
+    "hardware": {
+      "name": "LAB-PJE-011",
+      "uuid": "a11ce000-0000-4000-8000-000000000011",
+      "memory": 16384,
+      "lastloggeduser": "usuario.demo.011",
+      "chassis_type": "Desktop",
+      "workgroup": "judicia.example.test",
+      "description": "FICTÍCIO — laboratório JUDICI.A; unidade: Santarém; setor: Secretaria; responsável fictício: usuario.demo.011. Não representa equipamento real."
+    },
+    "bios": {
+      "smanufacturer": "Dell",
+      "smodel": "OptiPlex 7010",
+      "ssn": "DEMO-PJE-SN-011",
+      "assettag": "DEMO-PAT-011"
+    },
+    "cpus": [
+      {
+        "name": "Intel Core i5-13500",
+        "manufacturer": "Intel",
+        "core": 14,
+        "corecount": 14,
+        "speed": 2500,
+        "arch": "x86_64"
+      }
+    ],
+    "memories": [
+      {
+        "capacity": 16384,
+        "type": "DDR4",
+        "caption": "DIMM 0 (simulado)"
+      }
+    ],
+    "operatingsystem": {
+      "name": "Windows",
+      "full_name": "Microsoft Windows 11 Pro",
+      "version": "24H2",
+      "arch": "x86_64",
+      "kernel_name": "MSWin32",
+      "fqdn": "lab-pje-011.judicia.example.test",
+      "dns_domain": "judicia.example.test",
+      "timezone": {
+        "name": "America/Sao_Paulo",
+        "offset": "-0300"
+      }
+    },
+    "storages": [
+      {
+        "name": "\\\\.\\PHYSICALDRIVE0",
+        "model": "SSD NVMe 512 GiB (simulado)",
+        "type": "disk",
+        "interface": "NVMe",
+        "disksize": 524288,
+        "serial": "DEMO-SSD-011"
+      }
+    ],
+    "drives": [
+      {
+        "letter": "C:",
+        "systemdrive": true,
+        "filesystem": "NTFS",
+        "total": 524288,
+        "free": 340787,
+        "label": "LAB-SIMULADO"
+      }
+    ],
+    "networks": [
+      {
+        "description": "Ethernet (simulado)",
+        "type": "ethernet",
+        "ipaddress": "192.0.2.21",
+        "ipmask": "255.255.255.0",
+        "mac": "02:00:00:50:4a:0b",
+        "status": "up"
+      }
+    ],
+    "users": [
+      {
+        "login": "usuario.demo.011",
+        "domain": "judicia.example.test"
+      }
+    ],
+    "softwares": [
+      {
+        "name": "Mozilla Firefox",
+        "comments": "Instalação fictícia; versão e homologação não verificadas."
+      },
+      {
+        "name": "PJeOffice Pro",
+        "comments": "Instalação fictícia; não indica conexão ou versão homologada do PJe."
+      }
+    ]
+  }
+}

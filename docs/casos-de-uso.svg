@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1260" viewBox="0 0 1600 1260" role="img" aria-labelledby="title desc">
+  <title id="title">Diagrama de casos de uso do Pulso TIC</title>
+  <desc id="desc">Perfis solicitante, equipe de TIC e gestor interagem com casos de uso do Pulso TIC, integrado à Laya e ao GLPI.</desc>
+  <defs>
+    <style>
+      .bg{fill:#f4f7fb}.panel{fill:#fff;stroke:#d7e0ec;stroke-width:2}.system{fill:#eef4ff;stroke:#7292d0;stroke-width:3}.group{fill:#fff;stroke:#d6dfeb;stroke-width:2}.actor{fill:#fff;stroke:#aab8ca;stroke-width:2}.uc{fill:#f8fbff;stroke:#6684bd;stroke-width:2}.ucText{font:600 17px 'Segoe UI',Arial,sans-serif;fill:#24354d}.label{font:700 20px 'Segoe UI',Arial,sans-serif;fill:#23344b}.small{font:500 15px 'Segoe UI',Arial,sans-serif;fill:#62738a}.title{font:700 34px 'Segoe UI',Arial,sans-serif;fill:#17263c}.sub{font:400 17px 'Segoe UI',Arial,sans-serif;fill:#607188}.actorText{font:700 18px 'Segoe UI',Arial,sans-serif;fill:#23344b}.line{fill:none;stroke:#91a2b8;stroke-width:2.1}.dep{fill:none;stroke:#6984aa;stroke-width:2;stroke-dasharray:8 7}.external{fill:#fff;stroke:#b2c0d2;stroke-width:2}.extText{font:700 18px 'Segoe UI',Arial,sans-serif;fill:#2a405d}
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#6984aa"/></marker>
+  </defs>
+  <rect class="bg" width="1600" height="1260"/>
+  <text class="title" x="64" y="62">Pulso TIC · Diagrama de casos de uso</text>
+  <text class="sub" x="65" y="94">Perfis de acesso e integrações identificados na aplicação</text>
+
+  <!-- associations behind nodes -->
+  <g class="line">
+    <path d="M196 248H250V203H355"/><path d="M250 248V312H355"/><path d="M250 312V369H355"/>
+    <path d="M196 614H250V498H355"/><path d="M250 555H355"/><path d="M250 614H355"/><path d="M250 673H355"/><path d="M250 732H355"/><path d="M250 791H355"/><path d="M250 850H355"/>
+    <path d="M196 1016H250V933H355"/><path d="M250 992H355"/><path d="M250 1051H355"/><path d="M250 1110H355"/>
+  </g>
+  <g class="dep" marker-end="url(#arrow)">
+    <path d="M820 203H1230V408H1325"/><path d="M820 312H1190V485H1325"/>
+    <path d="M820 498H1240V485H1325"/><path d="M820 555H1240V485H1325"/>
+  </g>
+
+  <!-- actor column -->
+  <rect class="panel" x="42" y="125" width="180" height="1080" rx="20"/>
+  <text class="label" x="70" y="160">Atores</text>
+  <g transform="translate(132 222)"><circle class="actor" cx="0" cy="0" r="17"/><path class="line" d="M0 17V60M-25 36H25M0 60L-22 90M0 60L22 90"/></g>
+  <text class="actorText" x="132" y="334" text-anchor="middle">Solicitante</text>
+  <g transform="translate(132 555)"><circle class="actor" cx="0" cy="0" r="17"/><path class="line" d="M0 17V60M-25 36H25M0 60L-22 90M0 60L22 90"/></g>
+  <text class="actorText" x="132" y="667" text-anchor="middle">Equipe de TIC</text>
+  <g transform="translate(132 957)"><circle class="actor" cx="0" cy="0" r="17"/><path class="line" d="M0 17V60M-25 36H25M0 60L-22 90M0 60L22 90"/></g>
+  <text class="actorText" x="132" y="1069" text-anchor="middle">Gestor</text>
+
+  <!-- application boundary -->
+  <rect class="system" x="275" y="125" width="940" height="1080" rx="24"/>
+  <text class="label" x="310" y="160">Sistema Pulso TIC</text>
+
+  <!-- requester cases -->
+  <rect class="group" x="305" y="180" width="880" height="220" rx="18"/>
+  <text class="small" x="330" y="207">ATENDIMENTO · SOLICITANTE</text>
+  <ellipse class="uc" cx="575" cy="245" rx="220" ry="31"/><text class="ucText" x="575" y="251" text-anchor="middle">Entrar e sair do sistema</text>
+  <ellipse class="uc" cx="900" cy="245" rx="220" ry="31"/><text class="ucText" x="900" y="251" text-anchor="middle">Descrever problema e solicitar triagem</text>
+  <ellipse class="uc" cx="575" cy="312" rx="220" ry="31"/><text class="ucText" x="575" y="318" text-anchor="middle">Consultar orientação da base de conhecimento</text>
+  <ellipse class="uc" cx="900" cy="312" rx="220" ry="31"/><text class="ucText" x="900" y="318" text-anchor="middle">Solicitar abertura de chamado</text>
+  <ellipse class="uc" cx="575" cy="369" rx="220" ry="25"/><text class="ucText" x="575" y="375" text-anchor="middle">Acompanhar chamado e status</text>
+  <ellipse class="uc" cx="900" cy="369" rx="220" ry="25"/><text class="ucText" x="900" y="375" text-anchor="middle">Resolver por autoatendimento / avaliar</text>
+
+  <!-- TIC cases -->
+  <rect class="group" x="305" y="425" width="880" height="440" rx="18"/>
+  <text class="small" x="330" y="452">OPERAÇÃO E QUALIDADE · EQUIPE DE TIC</text>
+  <ellipse class="uc" cx="575" cy="498" rx="220" ry="27"/><text class="ucText" x="575" y="504" text-anchor="middle">Revisar e corrigir classificação</text>
+  <ellipse class="uc" cx="900" cy="498" rx="220" ry="27"/><text class="ucText" x="900" y="504" text-anchor="middle">Gerenciar chamados e sincronizar status</text>
+  <ellipse class="uc" cx="575" cy="555" rx="220" ry="27"/><text class="ucText" x="575" y="561" text-anchor="middle">Acompanhar incidentes</text>
+  <ellipse class="uc" cx="900" cy="555" rx="220" ry="27"/><text class="ucText" x="900" y="561" text-anchor="middle">Consultar painel e indicadores</text>
+  <ellipse class="uc" cx="575" cy="614" rx="220" ry="27"/><text class="ucText" x="575" y="620" text-anchor="middle">Configurar perguntas da triagem</text>
+  <ellipse class="uc" cx="900" cy="614" rx="220" ry="27"/><text class="ucText" x="900" y="620" text-anchor="middle">Configurar piloto e metas de SLA</text>
+  <ellipse class="uc" cx="575" cy="673" rx="220" ry="27"/><text class="ucText" x="575" y="679" text-anchor="middle">Avaliar qualidade dos casos corrigidos</text>
+  <ellipse class="uc" cx="900" cy="673" rx="220" ry="27"/><text class="ucText" x="900" y="679" text-anchor="middle">Consultar base de conhecimento</text>
+  <ellipse class="uc" cx="575" cy="732" rx="220" ry="27"/><text class="ucText" x="575" y="738" text-anchor="middle">Acompanhar métricas por período/unidade</text>
+  <ellipse class="uc" cx="900" cy="732" rx="220" ry="27"/><text class="ucText" x="900" y="738" text-anchor="middle">Verificar integração com GLPI</text>
+  <text class="small" x="330" y="824">TIC possui acesso operacional amplo no código atual.</text>
+
+  <!-- manager cases -->
+  <rect class="group" x="305" y="890" width="880" height="280" rx="18"/>
+  <text class="small" x="330" y="918">ADMINISTRAÇÃO E ACOMPANHAMENTO · GESTOR</text>
+  <ellipse class="uc" cx="575" cy="957" rx="220" ry="27"/><text class="ucText" x="575" y="963" text-anchor="middle">Criar usuários</text>
+  <ellipse class="uc" cx="900" cy="957" rx="220" ry="27"/><text class="ucText" x="900" y="963" text-anchor="middle">Atribuir perfis de acesso</text>
+  <ellipse class="uc" cx="575" cy="1016" rx="220" ry="27"/><text class="ucText" x="575" y="1022" text-anchor="middle">Consultar painel e indicadores</text>
+  <ellipse class="uc" cx="900" cy="1016" rx="220" ry="27"/><text class="ucText" x="900" y="1022" text-anchor="middle">Acompanhar chamados e incidentes</text>
+  <ellipse class="uc" cx="735" cy="1075" rx="220" ry="27"/><text class="ucText" x="735" y="1081" text-anchor="middle">Consultar configuração do piloto e SLAs</text>
+  <text class="small" x="330" y="1139">O gestor tem acesso de consulta a essas áreas, além da gestão de usuários.</text>
+
+  <!-- external systems -->
+  <rect class="panel" x="1260" y="125" width="300" height="1080" rx="20"/>
+  <text class="label" x="1290" y="160">Sistemas externos</text>
+  <rect class="external" x="1325" y="365" width="180" height="88" rx="16"/>
+  <text class="extText" x="1415" y="402" text-anchor="middle">Laya</text><text class="small" x="1415" y="428" text-anchor="middle">Classificação por IA</text>
+  <rect class="external" x="1325" y="455" width="180" height="105" rx="16"/>
+  <text class="extText" x="1415" y="492" text-anchor="middle">GLPI</text><text class="small" x="1415" y="518" text-anchor="middle">Conhecimento, chamados</text><text class="small" x="1415" y="539" text-anchor="middle">e atualização de status</text>
+  <text class="small" x="1290" y="1145">Linhas tracejadas: chamadas de integração.</text>
+</svg>

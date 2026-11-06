@@ -1,0 +1,247 @@
+datasource db {
+  provider = "mysql"
+}
+
+model AppUser {
+  id           String       @id @db.Char(36)
+  tenantId     String?      @map("tenant_id") @db.Char(36)
+  email        String       @db.VarChar(254)
+  displayName  String       @map("display_name") @db.VarChar(100)
+  role         String       @db.VarChar(32)
+  passwordSalt String       @map("password_salt") @db.Char(32)
+  passwordHash String       @map("password_hash") @db.Char(128)
+  active       Boolean      @default(true)
+  createdAt    DateTime     @default(now()) @map("created_at") @db.DateTime(3)
+  sessions     AppSession[]
+  requests     Request[]
+  copilotSessions CopilotSession[]
+
+  @@unique([tenantId, email], map: "app_users_tenant_email_uidx")
+  @@map("app_users")
+}
+
+model AppSession {
+  tokenHash String   @id @map("token_hash") @db.Char(64)
+  tenantId  String?  @map("tenant_id") @db.Char(36)
+  userId    String   @map("user_id") @db.Char(36)
+  csrfHash  String   @map("csrf_hash") @db.Char(64)
+  expiresAt DateTime @map("expires_at") @db.DateTime(3)
+  createdAt DateTime @default(now()) @map("created_at") @db.DateTime(3)
+  user      AppUser  @relation(fields: [userId], references: [id], onDelete: Cascade, map: "app_sessions_user_fk")
+
+  @@index([userId, expiresAt], map: "app_sessions_user_expiry_idx")
+  @@map("app_sessions")
+}
+
+model KnowledgeArticle {
+  id        String    @id @db.VarChar(191)
+  tenantId  String?   @map("tenant_id") @db.Char(36)
+  title     String    @db.VarChar(255)
+  category  String    @db.VarChar(100)
+  system    String    @db.VarChar(100)
+  problem   String    @db.Text
+  solution  String    @db.Text
+  steps     Json
+  active    Boolean   @default(true)
+  createdAt DateTime  @default(now()) @map("created_at") @db.DateTime(3)
+  requests  Request[]
+
+  @@map("knowledge_articles")
+}
+
+model Request {
+  id                String            @id @db.VarChar(191)
+  tenantId          String?           @map("tenant_id") @db.Char(36)
+  description       String            @db.Text
+  decision          Json
+  priority          String            @db.VarChar(64)
+  queue             String            @db.VarChar(100)
+  confidence        Decimal           @db.Decimal(8, 5)
+  articleId         String?           @map("article_id") @db.VarChar(191)
+  articleSnapshot   Json?             @map("article_snapshot")
+  correctedDecision Json?             @map("corrected_decision")
+  correctedAt       DateTime?         @map("corrected_at") @db.DateTime(3)
+  correctionReason  String?           @map("correction_reason") @db.Text
+  triageStatus      String            @default("READY") @map("triage_status") @db.VarChar(64)
+  locality          String            @default("Nao informada") @db.VarChar(255)
+  synthetic         Boolean           @default(false)
+  createdBy         String?           @map("created_by") @db.Char(36)
+  status            String            @default("ANALYZED") @db.VarChar(64)
+  provider          String            @db.VarChar(100)
+  createdAt         DateTime          @default(now()) @map("created_at") @db.DateTime(3)
+  article           KnowledgeArticle? @relation(fields: [articleId], references: [id], onDelete: Restrict, map: "requests_article_fk")
+  creator           AppUser?          @relation(fields: [createdBy], references: [id], onDelete: Restrict, map: "requests_user_fk")
+  decisions         Decision[]
+  tickets           Ticket[]
+  serviceEvents     ServiceEvent[]
+  feedback          RequestFeedback?
+  evaluationCase    EvaluationCase?
+  copilotSessions   CopilotSession[]
+
+  @@index([createdAt], map: "requests_created_idx")
+  @@map("requests")
+}
+
+/// Sessão do Copilot Nível 1 (estrutura de hermes-memory/sessoes/template-sessao.md).
+model CopilotSession {
+  id               String   @id @db.VarChar(40)
+  tenantId         String?  @map("tenant_id") @db.Char(36)
+  requestId        String?  @map("request_id") @db.VarChar(191)
+  machineId        String   @map("machine_id") @db.VarChar(40)
+  machineDetection String   @default("seletor") @map("machine_detection") @db.VarChar(32)
+  status           String   @default("EM_ANDAMENTO") @db.VarChar(40)
+  engine           String   @default("regras") @db.VarChar(191)
+  state            Json
+  ticketId         String?  @map("ticket_id") @db.VarChar(191)
+  createdBy        String   @map("created_by") @db.Char(36)
+  createdAt        DateTime @default(now()) @map("created_at") @db.DateTime(3)
+  updatedAt        DateTime @default(now()) @map("updated_at") @db.DateTime(3)
+  request          Request? @relation(fields: [requestId], references: [id], onDelete: SetNull, map: "copilot_sessions_request_fk")
+  creator          AppUser  @relation(fields: [createdBy], references: [id], onDelete: Cascade, map: "copilot_sessions_user_fk")
+
+  @@index([createdBy, createdAt], map: "copilot_sessions_user_idx")
+  @@index([requestId], map: "copilot_sessions_request_idx")
+  @@map("copilot_sessions")
+}
+
+model Decision {
+  id        BigInt   @id @default(autoincrement()) @db.BigInt
+  tenantId  String?  @map("tenant_id") @db.Char(36)
+  requestId String   @map("request_id") @db.VarChar(191)
+  payload   Json
+  provider  String   @db.VarChar(100)
+  createdAt DateTime @default(now()) @map("created_at") @db.DateTime(3)
+  request   Request  @relation(fields: [requestId], references: [id], onDelete: Cascade, map: "decisions_request_fk")
+
+  @@map("decisions")
+}
+
+model TicketProtocolSeq {
+  id BigInt @id @default(autoincrement()) @db.BigInt
+
+  @@map("ticket_protocol_seq")
+}
+
+model Ticket {
+  id              String                @id @db.VarChar(191)
+  tenantId        String?               @map("tenant_id") @db.Char(36)
+  protocol        String                @db.VarChar(191)
+  requestId       String                @map("request_id") @db.VarChar(191)
+  description     String                @db.Text
+  category        String                @db.VarChar(100)
+  system          String                @db.VarChar(100)
+  impact          String                @db.VarChar(64)
+  urgency         String                @db.VarChar(64)
+  priority        String                @db.VarChar(64)
+  status          String                @default("OPEN") @db.VarChar(64)
+  assignedQueue   String                @map("assigned_queue") @db.VarChar(100)
+  confidence      Decimal               @db.Decimal(8, 5)
+  incidentCode    String?               @map("incident_code") @db.VarChar(191)
+  synthetic       Boolean               @default(false)
+  firstAssignedAt DateTime?             @map("first_assigned_at") @db.DateTime(3)
+  firstResolvedAt DateTime?             @map("first_resolved_at") @db.DateTime(3)
+  statusSyncedAt  DateTime?             @map("status_synced_at") @db.DateTime(3)
+  glpiCategoryId  Int?                  @map("glpi_category_id")
+  queueRouting    String                @default("SUGGESTED_ONLY") @map("queue_routing") @db.VarChar(64)
+  createdAt       DateTime              @default(now()) @map("created_at") @db.DateTime(3)
+  request         Request               @relation(fields: [requestId], references: [id], map: "tickets_request_fk")
+  incidentLinks   IncidentTicket[]
+  statusHistory   TicketStatusHistory[]
+
+  @@unique([tenantId, protocol], map: "tickets_tenant_protocol_uidx")
+  @@index([system, createdAt], map: "tickets_system_created_idx")
+  @@map("tickets")
+}
+
+model Incident {
+  code       String           @id @db.VarChar(191)
+  tenantId   String?          @map("tenant_id") @db.Char(36)
+  title      String           @db.VarChar(255)
+  system     String           @db.VarChar(100)
+  category   String           @db.VarChar(100)
+  severity   String           @db.VarChar(64)
+  status     String           @default("INVESTIGATING") @db.VarChar(64)
+  detectedAt DateTime         @default(now()) @map("detected_at") @db.DateTime(3)
+  tickets    IncidentTicket[]
+
+  @@map("incidents")
+}
+
+model IncidentTicket {
+  tenantId     String?  @map("tenant_id") @db.Char(36)
+  incidentCode String   @map("incident_code") @db.VarChar(191)
+  ticketId     String   @map("ticket_id") @db.VarChar(191)
+  incident     Incident @relation(fields: [incidentCode], references: [code], onDelete: Cascade, map: "incident_tickets_incident_fk")
+  ticket       Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade, map: "incident_tickets_ticket_fk")
+
+  @@id([incidentCode, ticketId])
+  @@map("incident_tickets")
+}
+
+model ServiceEvent {
+  id                 BigInt   @id @default(autoincrement()) @db.BigInt
+  tenantId           String?  @map("tenant_id") @db.Char(36)
+  type               String   @db.VarChar(100)
+  requestId          String   @map("request_id") @db.VarChar(191)
+  knowledgeArticleId String?  @map("knowledge_article_id") @db.VarChar(191)
+  createdAt          DateTime @default(now()) @map("created_at") @db.DateTime(3)
+  request            Request  @relation(fields: [requestId], references: [id], map: "service_events_request_fk")
+
+  @@map("service_events")
+}
+
+model TicketStatusHistory {
+  id             BigInt   @id @default(autoincrement()) @db.BigInt
+  tenantId       String?  @map("tenant_id") @db.Char(36)
+  ticketId       String   @map("ticket_id") @db.VarChar(191)
+  previousStatus String?  @map("previous_status") @db.VarChar(64)
+  status         String   @db.VarChar(64)
+  observedAt     DateTime @default(now()) @map("observed_at") @db.DateTime(3)
+  ticket         Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade, map: "ticket_history_ticket_fk")
+
+  @@map("ticket_status_history")
+}
+
+model RequestFeedback {
+  requestId String   @id @map("request_id") @db.VarChar(191)
+  tenantId  String?  @map("tenant_id") @db.Char(36)
+  rating    Int      @db.SmallInt
+  comment   String?  @db.Text
+  createdAt DateTime @default(now()) @map("created_at") @db.DateTime(3)
+  request   Request  @relation(fields: [requestId], references: [id], onDelete: Cascade, map: "feedback_request_fk")
+
+  @@map("request_feedback")
+}
+
+model EvaluationCase {
+  id              BigInt   @id @default(autoincrement()) @db.BigInt
+  tenantId        String?  @map("tenant_id") @db.Char(36)
+  sourceRequestId String   @unique @map("source_request_id") @db.VarChar(191)
+  text            String   @db.Text
+  expected        Json
+  createdAt       DateTime @default(now()) @map("created_at") @db.DateTime(3)
+  request         Request  @relation(fields: [sourceRequestId], references: [id], onDelete: Cascade, map: "evaluation_request_fk")
+
+  @@map("evaluation_cases")
+}
+
+model AppSetting {
+  tenantId   String   @map("tenant_id") @db.Char(36)
+  settingKey String   @map("setting_key") @db.VarChar(191)
+  value      Json
+  updatedAt  DateTime @default(now()) @map("updated_at") @db.DateTime(3)
+
+  @@id([tenantId, settingKey])
+  @@map("app_settings")
+}
+
+model ServiceLocality {
+  id        BigInt   @id @default(autoincrement()) @db.BigInt
+  tenantId  String?  @map("tenant_id") @db.Char(36)
+  name      String   @db.VarChar(255)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now()) @map("created_at") @db.DateTime(3)
+  updatedAt DateTime @default(now()) @map("updated_at") @db.DateTime(3)
+
+  @@map("service_localities")
+}

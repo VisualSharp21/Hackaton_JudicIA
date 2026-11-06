@@ -1,0 +1,100 @@
+{
+  "action": "inventory",
+  "itemtype": "Computer",
+  "deviceid": "JUDICIA-DEMO-025",
+  "tag": "JUDICIA-DEMO",
+  "content": {
+    "versionclient": "JUDICIA-DEMO-1.0",
+    "hardware": {
+      "name": "LAB-PJE-025",
+      "uuid": "a11ce000-0000-4000-8000-000000000025",
+      "memory": 16384,
+      "lastloggeduser": "usuario.demo.025",
+      "chassis_type": "Notebook",
+      "workgroup": "judicia.example.test",
+      "description": "FICTÍCIO — laboratório JUDICI.A; unidade: Castanhal; setor: TIC; responsável fictício: usuario.demo.025. Não representa equipamento real."
+    },
+    "bios": {
+      "smanufacturer": "Lenovo",
+      "smodel": "ThinkPad E14 Gen 3",
+      "ssn": "DEMO-PJE-SN-025",
+      "assettag": "DEMO-PAT-025"
+    },
+    "cpus": [
+      {
+        "name": "AMD Ryzen 5 5500U",
+        "manufacturer": "AMD",
+        "core": 6,
+        "corecount": 6,
+        "speed": 2100,
+        "arch": "x86_64"
+      }
+    ],
+    "memories": [
+      {
+        "capacity": 16384,
+        "type": "DDR4",
+        "caption": "DIMM 0 (simulado)"
+      }
+    ],
+    "operatingsystem": {
+      "name": "Ubuntu",
+      "full_name": "Ubuntu 24.04 LTS",
+      "version": "24.04",
+      "arch": "x86_64",
+      "kernel_name": "linux",
+      "fqdn": "lab-pje-025.judicia.example.test",
+      "dns_domain": "judicia.example.test",
+      "timezone": {
+        "name": "America/Sao_Paulo",
+        "offset": "-0300"
+      }
+    },
+    "storages": [
+      {
+        "name": "/dev/nvme0n1",
+        "model": "SSD NVMe 512 GiB (simulado)",
+        "type": "disk",
+        "interface": "NVMe",
+        "disksize": 524288,
+        "serial": "DEMO-SSD-025"
+      }
+    ],
+    "drives": [
+      {
+        "type": "/",
+        "volumn": "/dev/nvme0n1p1",
+        "filesystem": "ext4",
+        "total": 524288,
+        "free": 235929,
+        "label": "LAB-SIMULADO"
+      }
+    ],
+    "networks": [
+      {
+        "description": "Wi-Fi (simulado)",
+        "type": "wifi",
+        "ipaddress": "192.0.2.35",
+        "ipmask": "255.255.255.0",
+        "mac": "02:00:00:50:4a:19",
+        "status": "up"
+      }
+    ],
+    "users": [
+      {
+        "login": "usuario.demo.025",
+        "domain": "judicia.example.test"
+      }
+    ],
+    "softwares": [
+      {
+        "name": "Mozilla Firefox",
+        "comments": "Instalação fictícia; versão e homologação não verificadas."
+      },
+      {
+        "name": "PJeOffice Pro",
+        "comments": "Instalação fictícia; não indica conexão ou versão homologada do PJe."
+      }
+    ]
+  }
+}

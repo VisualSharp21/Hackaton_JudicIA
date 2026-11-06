@@ -1,0 +1,9 @@
+node_modules/
+.venv-laya/
+.env
+*.log
+logs/
+evaluation/feedback.local.json
+
+# Metadados de download do Windows (ADS)
+*:Zone.Identifier

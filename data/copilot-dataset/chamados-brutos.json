@@ -1,0 +1,698 @@
+[
+  {
+    "id": "CHAM-2026-001",
+    "titulo": "PJeOffice não conecta ao assinar mandado de citação",
+    "relato": "Estou tentando assinar cinco mandados urgentes de citação aqui na Secretaria da 1ª Vara, mas quando clico em 'Assinar' no PJe, aparece a mensagem 'Não foi possível conectar ao PJeOffice'. O ícone do PJeOffice até aparece perto do relógio, mas o navegador Firefox fica dizendo que o serviço local na porta 8800 não está respondendo. Já reiniciei o navegador e nada.",
+    "computador": {
+      "nome": "LAB-PJE-001",
+      "patrimonio": "DEMO-PAT-001",
+      "serial": "DEMO-PJE-SN-001",
+      "modelo": "Dell OptiPlex 7010 (Desktop)",
+      "sistema_operacional": "Microsoft Windows 11 Pro 24H2",
+      "setor": "Secretaria",
+      "unidade": "Belém",
+      "ip": "192.0.2.11",
+      "mac": "02:00:00:50:4a:01",
+      "responsavel_ficticio": "usuario.demo.001"
+    },
+    "detalhes_contexto": {
+      "urgencia_usuario": "Alta",
+      "horario_relato": "08:45",
+      "prazo_processual": "Hoje até 12h"
+    },
+    "classificacao": null
+  },
+  {
+    "id": "CHAM-2026-002",
+    "titulo": "Lentidão ao abrir minutas de sentenças volumosas no PJe",
+    "relato": "Bom dia. No gabinete estamos com muita dificuldade para abrir os autos conclusos com mais de 300 páginas. A tela do PJe fica com a mensagem 'Carregando documento...' por quase 3 minutos e várias vezes dá tela branca. Outros sites abrem normalmente.",
+    "computador": {
+      "nome": "LAB-PJE-002",
+      "patrimonio": "DEMO-PAT-002",
+      "serial": "DEMO-PJE-SN-002",
+      "modelo": "Lenovo ThinkCentre M75q Gen 2 (Desktop)",
+      "sistema_operacional": "Microsoft Windows 11 Pro 24H2",
+      "setor": "Gabinete",
+      "unidade": "Belém",
+      "ip": "192.0.2.12",
+      "mac": "02:00:00:50:4a:02",
+      "responsavel_ficticio": "usuario.demo.002"
+    },
+    "detalhes_contexto": {
+      "urgencia_usuario": "Média",
+      "horario_relato": "09:10",
+      "prazo_processual": "Não imediato"
+    },
+    "classificacao": null
+  },
+  {
+    "id": "CHAM-2026-003",
+    "titulo": "Impressora de mandados e etiquetas travada com documentos na fila",
+    "relato": "A impressora do setor de distribuição parou de imprimir de repente. Tem mais de 12 certidões e mandados na fila de impressão com status 'Erro - Imprimindo' e ninguém consegue imprimir nada. A impressora está com as luzes acesas normais, mas nada sai.",
+    "computador": {
+      "nome": "LAB-PJE-003",
+      "patrimonio": "DEMO-PAT-003",
+      "serial": "DEMO-PJE-SN-003",
+      "modelo": "HP ProDesk 600 G6 (Desktop)",
+      "sistema_operacional": "Microsoft Windows 11 Pro 24H2",
+      "setor": "Distribuição",
+      "unidade": "Belém",
+      "ip": "192.0.2.13",
+      "mac": "02:00:00:50:4a:03",
+      "responsavel_ficticio": "usuario.demo.003"
+    },
+    "detalhes_contexto": {
+      "urgencia_usuario": "Alta",
+      "horario_relato": "09:25",
+      "prazo_processual": "Atendimento ao público"
+    },
+    "classificacao": null
+  },
+  {
+    "id": "CHAM-2026-004",
+    "titulo": "Microfone não funciona no Google Meet na sala de audiência",
+    "relato": "SOCORRO! Temos uma audiência de instrução e julgamento agendada para as 10:00 pelo Google Meet (link: https://meet.google.com/abc-defg-hij). Entramos na sala agora para testar e ninguém nos ouve. O notebook Dell Latitude não está captando nossa voz nem pelo microfone interno nem pela caixinha Jabra USB conectada.",
+    "computador": {
+      "nome": "LAB-PJE-004",
+      "patrimonio": "DEMO-PAT-004",
+      "serial": "DEMO-PJE-SN-004",
+      "modelo": "Dell Latitude 5440 (Notebook)",
+      "sistema_operacional": "Microsoft Windows 11 Pro 24H2",
+      "setor": "Sala de audiência",
+      "unidade": "Belém",
+      "ip": "192.0.2.14",
+      "mac": "02:00:00:50:4a:04",
+      "responsavel_ficticio": "usuario.demo.004"
+    },
+    "detalhes_contexto": {
+      "urgencia_usuario": "Crítica",
+      "horario_relato": "09:40",
+      "audiencia_em": "10:00 (em 20 minutos)",
+      "link_audiencia": "https://meet.google.com/abc-defg-hij"
+    },
+    "classificacao": null
+  },
+  {
+    "id": "CHAM-2026-005",
+    "titulo": "Falha na sincronização do repositório local e VPN de contingência",
+    "relato": "Estação de TIC com Ubuntu 24.04: após a última atualização do pacote de certificados corporativos, o cliente OpenVPN conecta mas não resolve a rota interna para o gateway de administração do PJe (10.20.0.1).",
+    "computador": {
+      "nome": "LAB-PJE-005",
+      "patrimonio": "DEMO-PAT-005",
+      "serial": "DEMO-PJE-SN-005",
+      "modelo": "Lenovo ThinkPad E14 Gen 3 (Notebook)",
+      "sistema_operacional": "Ubuntu 24.04 LTS 24.04",
+      "setor": "TIC",
+      "unidade": "Belém",
+      "ip": "192.0.2.15",
+      "mac": "02:00:00:50:4a:05",
+      "responsavel_ficticio": "usuario.demo.005"
+    },
+    "detalhes_contexto": {
+      "urgencia_usuario": "Média",
+      "horario_relato": "10:05",
+      "perfil_tecnico": true
+    },
+    "classificacao": null
+  },
+  {
+    "id": "CHAM-2026-006",
+    "titulo": "Token do certificado digital A3 não é reconhecido pelo Windows",
+    "relato": "Coloquei meu token USB azul do certificado digital da OAB/Certisign na porta USB frontal do computador, mas a luz vermelha não acende e o SafeSign não mostra o certificado. Ontem estava funcionando perfeitamente.",
+    "computador": {
+      "nome": "LAB-PJE-006",
+      "patrimonio": "DEMO-PAT-006",
+      "serial": "DEMO-PJE-SN-006",
+      "modelo": "Dell OptiPlex 7010 (Desktop)",
+      "sistema_operacional": "Microsoft Windows 11 Pro 24H2",
+      "setor": "Secretaria",
+      "unidade": "Ananindeua",
+      "ip": "192.0.2.16",
+      "mac": "02:00:00:50:4a:06",
+      "responsavel_ficticio": "usuario.demo.006"
+    },
+    "detalhes_contexto": {
+      "urgencia_usuario": "Alta",
+      "horario_relato": "10:15",
+      "prazo_processual": "Assinatura de certidão"
+    },
+    "classificacao": null
+  },
+  {
+    "id": "CHAM-2026-007",
+    "titulo": "Mensagem de erro de sessão expirada no PJe a cada 5 minutos",
+    "relato": "O assessor está redigindo os votos e a cada 5 ou 10 minutos aparece um pop-up 'Sua sessão expirou, faça login novamente'. Já perdeu dois parágrafos de texto digitado duas vezes hoje.",
+    "computador": {
+      "nome": "LAB-PJE-007",
+      "patrimonio": "DEMO-PAT-007",
+      "serial": "DEMO-PJE-SN-007",
+      "modelo": "Lenovo ThinkCentre M75q Gen 2 (Desktop)",
+      "sistema_operacional": "Microsoft Windows 11 Pro 24H2",
+      "setor": "Gabinete",
+      "unidade": "Ananindeua",
+      "ip": "192.0.2.17",
+      "mac": "02:00:00:50:4a:07",
+      "responsavel_ficticio": "usuario.demo.007"
+    },
+    "detalhes_contexto": {
+      "urgencia_usuario": "Alta",
+      "horario_relato": "10:30",
+      "prazo_processual": "Sessão de julgamento hoje à tarde"
+    },
+    "classificacao": null
+  },
+  {
+    "id": "CHAM-2026-008",
+    "titulo": "Queda na conexão de rede e internet no balcão de atendimento",
+    "relato": "O computador da recepção/distribuição perdeu conexão com a rede. No cantinho da barra de tarefas aparece um ícone de globo com um corte. Não abre nem o PJe, nem o e-mail institucional e nem o portal do TJPA.",
+    "computador": {
+      "nome": "LAB-PJE-008",
+      "patrimonio": "DEMO-PAT-008",
+      "serial": "DEMO-PJE-SN-008",
+      "modelo": "HP ProDesk 600 G6 (Desktop)",
+      "sistema_operacional": "Microsoft Windows 11 Pro 24H2",
+      "setor": "Distribuição",
+      "unidade": "Ananindeua",
+      "ip": "192.0.2.18",
+      "mac": "02:00:00:50:4a:08",
+      "responsavel_ficticio": "usuario.demo.008"
+    },
+    "detalhes_contexto": {
+      "urgencia_usuario": "Alta",
+      "horario_relato": "10:45",
+      "balcao": "Fila de advogados presencial"
+    },
+    "classificacao": null
+  },
+  {
+    "id": "CHAM-2026-009",
+    "titulo": "Câmera travando com tela preta durante videoconferência no Meet",
+    "relato": "No notebook da Sala de Audiências 2, quando entramos na sala do Google Meet (https://meet.google.com/xyz-uvwx-rst), a imagem da câmera integrada aparece por 2 segundos e depois congela ou fica com tela preta. O juiz já está presente na sala virtual.",
+    "computador": {
+      "nome": "LAB-PJE-009",
+      "patrimonio": "DEMO-PAT-009",
+      "serial": "DEMO-PJE-SN-009",
+      "modelo": "Dell Latitude 5440 (Notebook)",
+      "sistema_operacional": "Microsoft Windows 11 Pro 24H2",
+      "setor": "Sala de audiência",
+      "unidade": "Ananindeua",
+      "ip": "192.0.2.19",
+      "mac": "02:00:00:50:4a:09",
+      "responsavel_ficticio": "usuario.demo.009"
+    },
+    "detalhes_contexto": {
+      "urgencia_usuario": "Crítica",
+      "horario_relato": "10:55",
+      "audiencia_em": "11:00 (em 5 minutos)",
+      "link_audiencia": "https://meet.google.com/xyz-uvwx-rst"
+    },
+    "classificacao": null
+  },
+  {
+    "id": "CHAM-2026-010",
+    "titulo": "Instalação do PJeOffice Pro não conclui dependência Java no Ubuntu",
+    "relato": "Ao rodar o script de instalação do pjeoffice-pro no Ubuntu 24.04 LTS da bancada de testes, acusa incompatibilidade com o OpenJDK 21 padrão do sistema e o daemon do pjeoffice não sobe no systemd.",
+    "computador": {
+      "nome": "LAB-PJE-010",
+      "patrimonio": "DEMO-PAT-010",
+      "serial": "DEMO-PJE-SN-010",
+      "modelo": "Lenovo ThinkPad E14 Gen 3 (Notebook)",
+      "sistema_operacional": "Ubuntu 24.04 LTS 24.04",
+      "setor": "TIC",
+      "unidade": "Ananindeua",
+      "ip": "192.0.2.20",
+      "mac": "02:00:00:50:4a:0a",
+      "responsavel_ficticio": "usuario.demo.010"
+    },
+    "detalhes_contexto": {
+      "urgencia_usuario": "Baixa",
+      "horario_relato": "11:15",
+      "perfil_tecnico": true
+    },
+    "classificacao": null
+  },
+  {
+    "id": "CHAM-2026-011",
+    "titulo": "E-mail institucional com caixa de entrada cheia e rejeitando recebimento",
+    "relato": "Não estou recebendo as intimações por e-mail no Zimbra/Outlook institucional. Vários advogados ligaram dizendo que receberam mensagem de 'Mailbox quota exceeded' (552 Mailbox size limit exceeded). Preciso liberar espaço urgente.",
+    "computador": {
+      "nome": "LAB-PJE-011",
+      "patrimonio": "DEMO-PAT-011",
+      "serial": "DEMO-PJE-SN-011",
+      "modelo": "Dell OptiPlex 7010 (Desktop)",
+      "sistema_operacional": "Microsoft Windows 11 Pro 24H2",
+      "setor": "Secretaria",
+      "unidade": "Santarém",
+      "ip": "192.0.2.21",
+      "mac": "02:00:00:50:4a:0b",
+      "responsavel_ficticio": "usuario.demo.011"
+    },
+    "detalhes_contexto": {
+      "urgencia_usuario": "Alta",
+      "horario_relato": "11:30",
+      "prazo_processual": "Intimações do dia"
+    },
+    "classificacao": null
+  },
+  {
+    "id": "CHAM-2026-012",
+    "titulo": "Monitor secundário do gabinete não dá sinal de vídeo",
+    "relato": "O juiz utiliza duas telas para comparar as petições e sentenças. Hoje cedo a segunda tela conectada pelo cabo HDMI/DisplayPort não liga de jeito nenhum, fica apenas com a luz laranja piscando e mensagem 'No Signal'.",
+    "computador": {
+      "nome": "LAB-PJE-012",
+      "patrimonio": "DEMO-PAT-012",
+      "serial": "DEMO-PJE-SN-012",
+      "modelo": "Lenovo ThinkCentre M75q Gen 2 (Desktop)",
+      "sistema_operacional": "Microsoft Windows 11 Pro 24H2",
+      "setor": "Gabinete",
+      "unidade": "Santarém",
+      "ip": "192.0.2.22",
+      "mac": "02:00:00:50:4a:0c",
+      "responsavel_ficticio": "usuario.demo.012"
+    },
+    "detalhes_contexto": {
+      "urgencia_usuario": "Média",
+      "horario_relato": "11:45",
+      "gabinete_ativo": true
+    },
+    "classificacao": null
+  },
+  {
+    "id": "CHAM-2026-013",
+    "titulo": "Computador não liga após queda de energia no prédio",
+    "relato": "Teve uma queda rápida de energia aqui no fórum há meia hora. Todos os computadores religaram, menos o HP ProDesk da Distribuição 2. Ao apertar o botão de ligar não acende nenhuma luz e nem o ventilador da fonte gira.",
+    "computador": {
+      "nome": "LAB-PJE-013",
+      "patrimonio": "DEMO-PAT-013",
+      "serial": "DEMO-PJE-SN-013",
+      "modelo": "HP ProDesk 600 G6 (Desktop)",
+      "sistema_operacional": "Microsoft Windows 11 Pro 24H2",
+      "setor": "Distribuição",
+      "unidade": "Santarém",
+      "ip": "192.0.2.23",
+      "mac": "02:00:00:50:4a:0d",
+      "responsavel_ficticio": "usuario.demo.013"
+    },
+    "detalhes_contexto": {
+      "urgencia_usuario": "Alta",
+      "horario_relato": "12:00",
+      "equipamento_parado": true
+    },
+    "classificacao": null
+  },
+  {
+    "id": "CHAM-2026-014",
+    "titulo": "Eco e retorno insuportável no áudio do Google Meet na sala de audiência",
+    "relato": "Estamos no link https://meet.google.com/aud-vara-001 fazendo audiência preliminar. Toda vez que o juiz ou o promotor fala, o áudio volta com um eco estridente e ensurdecedor para quem está participando de casa pelo celular. Está impossível continuar a sessão.",
+    "computador": {
+      "nome": "LAB-PJE-014",
+      "patrimonio": "DEMO-PAT-014",
+      "serial": "DEMO-PJE-SN-014",
+      "modelo": "Dell Latitude 5440 (Notebook)",
+      "sistema_operacional": "Microsoft Windows 11 Pro 24H2",
+      "setor": "Sala de audiência",
+      "unidade": "Santarém",
+      "ip": "192.0.2.24",
+      "mac": "02:00:00:50:4a:0e",
+      "responsavel_ficticio": "usuario.demo.014"
+    },
+    "detalhes_contexto": {
+      "urgencia_usuario": "Crítica",
+      "horario_relato": "13:30",
+      "audiencia_em": "Em andamento",
+      "link_audiencia": "https://meet.google.com/aud-vara-001"
+    },
+    "classificacao": null
+  },
+  {
+    "id": "CHAM-2026-015",
+    "titulo": "Erro de permissão no script de pré-diagnóstico do TJPA em ambiente Linux",
+    "relato": "Ao executar o script de pré-diagnóstico via terminal bash no notebook de suporte Ubuntu, o comando falha ao tentar ler a interface wireless sem privilégios de rede.",
+    "computador": {
+      "nome": "LAB-PJE-015",
+      "patrimonio": "DEMO-PAT-015",
+      "serial": "DEMO-PJE-SN-015",
+      "modelo": "Lenovo ThinkPad E14 Gen 3 (Notebook)",
+      "sistema_operacional": "Ubuntu 24.04 LTS 24.04",
+      "setor": "TIC",
+      "unidade": "Santarém",
+      "ip": "192.0.2.25",
+      "mac": "02:00:00:50:4a:0f",
+      "responsavel_ficticio": "usuario.demo.015"
+    },
+    "detalhes_contexto": {
+      "urgencia_usuario": "Baixa",
+      "horario_relato": "13:45",
+      "perfil_tecnico": true
+    },
+    "classificacao": null
+  },
+  {
+    "id": "CHAM-2026-016",
+    "titulo": "Senha do Windows ou da rede expirou e usuário bloqueado",
+    "relato": "Voltei do almoço e quando fui desbloquear a tela do computador apareceu a mensagem: 'Sua senha expirou e deve ser alterada'. Tentei colocar uma nova senha mas disse que não atende aos requisitos de complexidade do domínio do TJPA e agora a conta bloqueou por excesso de tentativas.",
+    "computador": {
+      "nome": "LAB-PJE-016",
+      "patrimonio": "DEMO-PAT-016",
+      "serial": "DEMO-PJE-SN-016",
+      "modelo": "Dell OptiPlex 7010 (Desktop)",
+      "sistema_operacional": "Microsoft Windows 11 Pro 24H2",
+      "setor": "Secretaria",
+      "unidade": "Marabá",
+      "ip": "192.0.2.26",
+      "mac": "02:00:00:50:4a:10",
+      "responsavel_ficticio": "usuario.demo.016"
+    },
+    "detalhes_contexto": {
+      "urgencia_usuario": "Alta",
+      "horario_relato": "14:00",
+      "servidor_parado": true
+    },
+    "classificacao": null
+  },
+  {
+    "id": "CHAM-2026-017",
+    "titulo": "Falha de validação da cadeia de certificados no PJe",
+    "relato": "Ao assinar uma decisão interlocutória, o sistema acusa 'Cadeia de certificação raiz não confiável (ICP-Brasil v5 / v10)'. O token é novo e foi emitido semana passada.",
+    "computador": {
+      "nome": "LAB-PJE-017",
+      "patrimonio": "DEMO-PAT-017",
+      "serial": "DEMO-PJE-SN-017",
+      "modelo": "Lenovo ThinkCentre M75q Gen 2 (Desktop)",
+      "sistema_operacional": "Microsoft Windows 11 Pro 24H2",
+      "setor": "Gabinete",
+      "unidade": "Marabá",
+      "ip": "192.0.2.27",
+      "mac": "02:00:00:50:4a:11",
+      "responsavel_ficticio": "usuario.demo.017"
+    },
+    "detalhes_contexto": {
+      "urgencia_usuario": "Alta",
+      "horario_relato": "14:15",
+      "prazo_processual": "Decisão liminar"
+    },
+    "classificacao": null
+  },
+  {
+    "id": "CHAM-2026-018",
+    "titulo": "Scanner de digitalização de peças físicas parou de comunicar",
+    "relato": "O scanner Fujitsu acoplado no ProDesk da distribuição não é reconhecido pelo software de digitalização. Ao clicar em 'Digitalizar petição', informa que o scanner está desligado ou ocupado por outro aplicativo.",
+    "computador": {
+      "nome": "LAB-PJE-018",
+      "patrimonio": "DEMO-PAT-018",
+      "serial": "DEMO-PJE-SN-018",
+      "modelo": "HP ProDesk 600 G6 (Desktop)",
+      "sistema_operacional": "Microsoft Windows 11 Pro 24H2",
+      "setor": "Distribuição",
+      "unidade": "Marabá",
+      "ip": "192.0.2.28",
+      "mac": "02:00:00:50:4a:12",
+      "responsavel_ficticio": "usuario.demo.018"
+    },
+    "detalhes_contexto": {
+      "urgencia_usuario": "Média",
+      "horario_relato": "14:30",
+      "autos_fisicos": true
+    },
+    "classificacao": null
+  },
+  {
+    "id": "CHAM-2026-019",
+    "titulo": "Navegador bloqueou a permissão de câmera e microfone no Google Meet",
+    "relato": "Abrimos o link https://meet.google.com/tjp-audi-019 e apareceu um aviso vermelho no topo do Chrome dizendo que a câmera e o microfone estão bloqueados para este site. Clicamos em tentar novamente mas o botão fica desativado.",
+    "computador": {
+      "nome": "LAB-PJE-019",
+      "patrimonio": "DEMO-PAT-019",
+      "serial": "DEMO-PJE-SN-019",
+      "modelo": "Dell Latitude 5440 (Notebook)",
+      "sistema_operacional": "Microsoft Windows 11 Pro 24H2",
+      "setor": "Sala de audiência",
+      "unidade": "Marabá",
+      "ip": "192.0.2.29",
+      "mac": "02:00:00:50:4a:13",
+      "responsavel_ficticio": "usuario.demo.019"
+    },
+    "detalhes_contexto": {
+      "urgencia_usuario": "Crítica",
+      "horario_relato": "14:40",
+      "audiencia_em": "15:00 (em 20 minutos)",
+      "link_audiencia": "https://meet.google.com/tjp-audi-019"
+    },
+    "classificacao": null
+  },
+  {
+    "id": "CHAM-2026-020",
+    "titulo": "Inconsistência de resolução DNS interna para o domínio tjpa.jus.br",
+    "relato": "Estação de TIC detectou que consultas ao servidor DNS primário (10.1.1.10) estão com timeout intermitente na zona judicia.example.test / tjpa.jus.br, causando lentidão na abertura do portal.",
+    "computador": {
+      "nome": "LAB-PJE-020",
+      "patrimonio": "DEMO-PAT-020",
+      "serial": "DEMO-PJE-SN-020",
+      "modelo": "Lenovo ThinkPad E14 Gen 3 (Notebook)",
+      "sistema_operacional": "Ubuntu 24.04 LTS 24.04",
+      "setor": "TIC",
+      "unidade": "Marabá",
+      "ip": "192.0.2.30",
+      "mac": "02:00:00:50:4a:14",
+      "responsavel_ficticio": "usuario.demo.020"
+    },
+    "detalhes_contexto": {
+      "urgencia_usuario": "Média",
+      "horario_relato": "15:00",
+      "perfil_tecnico": true
+    },
+    "classificacao": null
+  },
+  {
+    "id": "CHAM-2026-021",
+    "titulo": "Navegador Google Chrome fecha sozinho ao carregar visualizador de PDF do PJe",
+    "relato": "Toda vez que vou abrir um arquivo PDF com mais de 50 páginas anexado no processo dentro do PJe, a aba do Google Chrome trava e o navegador fecha sozinho de repente ('Ah, não! Ocorreu um erro').",
+    "computador": {
+      "nome": "LAB-PJE-021",
+      "patrimonio": "DEMO-PAT-021",
+      "serial": "DEMO-PJE-SN-021",
+      "modelo": "Dell OptiPlex 7010 (Desktop)",
+      "sistema_operacional": "Microsoft Windows 11 Pro 24H2",
+      "setor": "Secretaria",
+      "unidade": "Castanhal",
+      "ip": "192.0.2.31",
+      "mac": "02:00:00:50:4a:15",
+      "responsavel_ficticio": "usuario.demo.021"
+    },
+    "detalhes_contexto": {
+      "urgencia_usuario": "Alta",
+      "horario_relato": "15:15",
+      "expediente": "Secretaria"
+    },
+    "classificacao": null
+  },
+  {
+    "id": "CHAM-2026-022",
+    "titulo": "Assinador em lote do PJe trava na metade da lista de processos",
+    "relato": "O magistrado selecionou 40 despachos para assinar em lote. O sistema assinou os primeiros 18 e depois ficou em loop infinito na barra de progresso. Não dá erro e não conclui.",
+    "computador": {
+      "nome": "LAB-PJE-022",
+      "patrimonio": "DEMO-PAT-022",
+      "serial": "DEMO-PJE-SN-022",
+      "modelo": "Lenovo ThinkCentre M75q Gen 2 (Desktop)",
+      "sistema_operacional": "Microsoft Windows 11 Pro 24H2",
+      "setor": "Gabinete",
+      "unidade": "Castanhal",
+      "ip": "192.0.2.32",
+      "mac": "02:00:00:50:4a:16",
+      "responsavel_ficticio": "usuario.demo.022"
+    },
+    "detalhes_contexto": {
+      "urgencia_usuario": "Alta",
+      "horario_relato": "15:30",
+      "assinatura_em_lote": true
+    },
+    "classificacao": null
+  },
+  {
+    "id": "CHAM-2026-023",
+    "titulo": "Teclado e mouse congelando após alguns minutos de uso",
+    "relato": "Na máquina da distribuição, o ponteiro do mouse fica travando em câmera lenta e o teclado engole letras ou repete caracteres ('ssssss'). Se tirar o cabo USB e colocar de novo volta por 1 minuto e depois trava de novo.",
+    "computador": {
+      "nome": "LAB-PJE-023",
+      "patrimonio": "DEMO-PAT-023",
+      "serial": "DEMO-PJE-SN-023",
+      "modelo": "HP ProDesk 600 G6 (Desktop)",
+      "sistema_operacional": "Microsoft Windows 11 Pro 24H2",
+      "setor": "Distribuição",
+      "unidade": "Castanhal",
+      "ip": "192.0.2.33",
+      "mac": "02:00:00:50:4a:17",
+      "responsavel_ficticio": "usuario.demo.023"
+    },
+    "detalhes_contexto": {
+      "urgencia_usuario": "Média",
+      "horario_relato": "15:45",
+      "atendimento_prejudicado": true
+    },
+    "classificacao": null
+  },
+  {
+    "id": "CHAM-2026-024",
+    "titulo": "Wi-Fi oscilando e desconectando durante audiência pelo Meet",
+    "relato": "O notebook da sala 4 está conectado pelo Wi-Fi 'TJPA-CORPORATIVO'. A cada 10 minutos a conexão cai, a tela do Google Meet (https://meet.google.com/seg-aud-024) trava e os participantes ficam robóticos. Tem um cabo de rede azul sobrando na bancada mas não sabemos se funciona.",
+    "computador": {
+      "nome": "LAB-PJE-024",
+      "patrimonio": "DEMO-PAT-024",
+      "serial": "DEMO-PJE-SN-024",
+      "modelo": "Dell Latitude 5440 (Notebook)",
+      "sistema_operacional": "Microsoft Windows 11 Pro 24H2",
+      "setor": "Sala de audiência",
+      "unidade": "Castanhal",
+      "ip": "192.0.2.34",
+      "mac": "02:00:00:50:4a:18",
+      "responsavel_ficticio": "usuario.demo.024"
+    },
+    "detalhes_contexto": {
+      "urgencia_usuario": "Crítica",
+      "horario_relato": "16:00",
+      "audiencia_em": "Em andamento",
+      "link_audiencia": "https://meet.google.com/seg-aud-024"
+    },
+    "classificacao": null
+  },
+  {
+    "id": "CHAM-2026-025",
+    "titulo": "Verificação de conectividade com a API do GLPI 11 via cURL no Linux",
+    "relato": "Ambiente de testes da equipe técnica: o token OAuth2 obtido via client credentials expira e a renovação automática falha quando a chamada HTTP retorna HTTP 401 por cabeçalho malformado.",
+    "computador": {
+      "nome": "LAB-PJE-025",
+      "patrimonio": "DEMO-PAT-025",
+      "serial": "DEMO-PJE-SN-025",
+      "modelo": "Lenovo ThinkPad E14 Gen 3 (Notebook)",
+      "sistema_operacional": "Ubuntu 24.04 LTS 24.04",
+      "setor": "TIC",
+      "unidade": "Castanhal",
+      "ip": "192.0.2.35",
+      "mac": "02:00:00:50:4a:19",
+      "responsavel_ficticio": "usuario.demo.025"
+    },
+    "detalhes_contexto": {
+      "urgencia_usuario": "Baixa",
+      "horario_relato": "16:15",
+      "perfil_tecnico": true
+    },
+    "classificacao": null
+  },
+  {
+    "id": "CHAM-2026-026",
+    "titulo": "Alerta de pouco espaço no disco C: impedindo download de autos",
+    "relato": "Apareceu uma notificação vermelha no Windows dizendo 'Pouco espaço em disco - Você está ficando sem espaço no disco local (C:)'. Fui tentar baixar a cópia integral de um processo de júri e deu falha no download por falta de espaço.",
+    "computador": {
+      "nome": "LAB-PJE-026",
+      "patrimonio": "DEMO-PAT-026",
+      "serial": "DEMO-PJE-SN-026",
+      "modelo": "Dell OptiPlex 7010 (Desktop)",
+      "sistema_operacional": "Microsoft Windows 11 Pro 24H2",
+      "setor": "Secretaria",
+      "unidade": "Altamira",
+      "ip": "192.0.2.36",
+      "mac": "02:00:00:50:4a:1a",
+      "responsavel_ficticio": "usuario.demo.026"
+    },
+    "detalhes_contexto": {
+      "urgencia_usuario": "Média",
+      "horario_relato": "16:30",
+      "disco_cheio": true
+    },
+    "classificacao": null
+  },
+  {
+    "id": "CHAM-2026-027",
+    "titulo": "Áudio do juiz não sai nas caixas acústicas da sala do gabinete",
+    "relato": "O juiz está participando de uma reunião administrativa de diretoria pelo computador do gabinete, ele consegue nos ouvir pelos fones, mas quando desliga os fones para colocar no som ambiente da sala, não sai nenhum som nas caixas externas.",
+    "computador": {
+      "nome": "LAB-PJE-027",
+      "patrimonio": "DEMO-PAT-027",
+      "serial": "DEMO-PJE-SN-027",
+      "modelo": "Lenovo ThinkCentre M75q Gen 2 (Desktop)",
+      "sistema_operacional": "Microsoft Windows 11 Pro 24H2",
+      "setor": "Gabinete",
+      "unidade": "Altamira",
+      "ip": "192.0.2.37",
+      "mac": "02:00:00:50:4a:1b",
+      "responsavel_ficticio": "usuario.demo.027"
+    },
+    "detalhes_contexto": {
+      "urgencia_usuario": "Média",
+      "horario_relato": "16:45",
+      "reuniao": true
+    },
+    "classificacao": null
+  },
+  {
+    "id": "CHAM-2026-028",
+    "titulo": "Erro de 'Bad Gateway 502' ao consultar tabela de custas no portal",
+    "relato": "Estamos no balcão calculando as guias de recolhimento de custas para distribuição de uma ação de cobrança, mas ao clicar no módulo de emissão de boletos bancários da página do tribunal dá página branca com '502 Bad Gateway'.",
+    "computador": {
+      "nome": "LAB-PJE-028",
+      "patrimonio": "DEMO-PAT-028",
+      "serial": "DEMO-PJE-SN-028",
+      "modelo": "HP ProDesk 600 G6 (Desktop)",
+      "sistema_operacional": "Microsoft Windows 11 Pro 24H2",
+      "setor": "Distribuição",
+      "unidade": "Altamira",
+      "ip": "192.0.2.38",
+      "mac": "02:00:00:50:4a:1c",
+      "responsavel_ficticio": "usuario.demo.028"
+    },
+    "detalhes_contexto": {
+      "urgencia_usuario": "Alta",
+      "horario_relato": "17:00",
+      "atendimento_externo": true
+    },
+    "classificacao": null
+  },
+  {
+    "id": "CHAM-2026-029",
+    "titulo": "Notebook desligou sozinho no meio do depoimento da ré na audiência",
+    "relato": "URGÊNCIA MÁXIMA: Estávamos no meio do depoimento na audiência virtual (https://meet.google.com/urg-vara-029). O notebook Dell Latitude estava sem a fonte de energia na tomada (apenas na bateria) e desligou repentinamente. Ligamos na tomada agora e precisamos retomar imediatamente a sala do Meet.",
+    "computador": {
+      "nome": "LAB-PJE-029",
+      "patrimonio": "DEMO-PAT-029",
+      "serial": "DEMO-PJE-SN-029",
+      "modelo": "Dell Latitude 5440 (Notebook)",
+      "sistema_operacional": "Microsoft Windows 11 Pro 24H2",
+      "setor": "Sala de audiência",
+      "unidade": "Altamira",
+      "ip": "192.0.2.39",
+      "mac": "02:00:00:50:4a:1d",
+      "responsavel_ficticio": "usuario.demo.029"
+    },
+    "detalhes_contexto": {
+      "urgencia_usuario": "Crítica",
+      "horario_relato": "17:10",
+      "audiencia_em": "Interrompida abruptamente",
+      "link_audiencia": "https://meet.google.com/urg-vara-029"
+    },
+    "classificacao": null
+  },
+  {
+    "id": "CHAM-2026-030",
+    "titulo": "Certificado TLS autoassinado impedindo chamadas do webhook do Zabbix",
+    "relato": "O servidor de monitoramento Zabbix está tentando enviar alertas de telemetria para o endpoint /api/telemetry do JUDICI.A, mas acusa erro de SSL Handshake 'certificate verify failed' devido à autoridade certificadora interna.",
+    "computador": {
+      "nome": "LAB-PJE-030",
+      "patrimonio": "DEMO-PAT-030",
+      "serial": "DEMO-PJE-SN-030",
+      "modelo": "Lenovo ThinkPad E14 Gen 3 (Notebook)",
+      "sistema_operacional": "Ubuntu 24.04 LTS 24.04",
+      "setor": "TIC",
+      "unidade": "Altamira",
+      "ip": "192.0.2.40",
+      "mac": "02:00:00:50:4a:1e",
+      "responsavel_ficticio": "usuario.demo.030"
+    },
+    "detalhes_contexto": {
+      "urgencia_usuario": "Média",
+      "horario_relato": "17:25",
+      "perfil_tecnico": true
+    },
+    "classificacao": null
+  }
+]

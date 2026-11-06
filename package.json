@@ -1,0 +1,27 @@
+{
+  "name": "pulso-tic-mvp",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test test/*.test.mjs",
+    "test:copilot:api": "node scripts/test-copilot-api.mjs",
+    "dev": "node --watch src/server.js",
+    "dev:backend": "node --watch src/server.js",
+    "dev:frontend": "node scripts/dev-frontend.mjs",
+    "users": "node scripts/manage-users.mjs",
+    "tenants": "node scripts/manage-tenants.mjs",
+    "db:migrate:postgres": "node scripts/migrate-postgres-to-mariadb.mjs",
+    "seed:glpi-knowledge": "node scripts/seed-glpi-knowledge.mjs",
+    "evaluate:classifier": "node scripts/evaluate-classifier.mjs",
+    "db:migrate": "node scripts/deploy-prisma-migrations.mjs",
+    "db:migrate:dev": "prisma migrate dev --config prisma.config.ts",
+    "db:migrate:registry:dev": "prisma migrate dev --config prisma.registry.config.ts"
+  },
+  "dependencies": {
+    "mysql2": "^3.24.6",
+    "pg": "^8.23.1",
+    "prisma": "^7.10.0"
+  }
+}

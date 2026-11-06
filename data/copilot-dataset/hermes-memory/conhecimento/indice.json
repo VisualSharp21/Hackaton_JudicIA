@@ -1,0 +1,1037 @@
+{
+  "descricao": "Índice de recuperação da base procedural do Hermes Copilot. Cada entrada aponta para uma seção 'Sintoma' de um arquivo .md desta pasta. 'fortes' pesam 3 pontos e 'termos' 1 ponto na busca determinística; 'so' indica para quais sistemas operacionais a seção traz passos; 'grupo' liga variantes Windows/Ubuntu do mesmo sintoma. Seções sem entrada aqui continuam indexadas pelo título.",
+  "versao": 1,
+  "procedimentos": [
+    {
+      "id": "roteiro-geral",
+      "arquivo": "roteiro-geral.md",
+      "secao": "Problema Ainda Não Identificado",
+      "grupo": "roteiro-geral",
+      "so": [
+        "windows",
+        "linux"
+      ],
+      "busca": false,
+      "fortes": [],
+      "termos": []
+    },
+    {
+      "id": "pjeoffice-conexao",
+      "arquivo": "pje-assinador.md",
+      "secao": "\"Não foi possível conectar ao PJeOffice\"",
+      "grupo": "pjeoffice",
+      "so": [
+        "windows"
+      ],
+      "categoria": "SYSTEM",
+      "sistema": "PJE",
+      "fortes": [
+        "pjeoffice",
+        "pje office",
+        "8800",
+        "nao foi possivel conectar ao pjeoffice",
+        "websocket",
+        "servico local"
+      ],
+      "termos": [
+        "assinar",
+        "assinador",
+        "assinatura",
+        "mandado",
+        "icone",
+        "relogio"
+      ]
+    },
+    {
+      "id": "token-a3",
+      "arquivo": "pje-assinador.md",
+      "secao": "Token / Certificado A3",
+      "grupo": "token-a3",
+      "so": [
+        "windows"
+      ],
+      "categoria": "HARDWARE",
+      "sistema": "COMPUTER",
+      "fortes": [
+        "token",
+        "a3",
+        "safesign",
+        "cartao inteligente",
+        "smart card",
+        "leitora de cartao",
+        "certisign"
+      ],
+      "termos": [
+        "certificado digital",
+        "certificado",
+        "luz vermelha",
+        "usb",
+        "pin",
+        "nao reconhecido"
+      ]
+    },
+    {
+      "id": "cadeia-icp",
+      "arquivo": "pje-assinador.md",
+      "secao": "Erro de Cadeia de Certificação",
+      "grupo": "cadeia-icp",
+      "so": [
+        "windows"
+      ],
+      "categoria": "SYSTEM",
+      "sistema": "PJE",
+      "fortes": [
+        "cadeia de certificacao",
+        "icp-brasil",
+        "icp brasil",
+        "raiz nao confiavel",
+        "nao confiavel",
+        "v5",
+        "v10"
+      ],
+      "termos": [
+        "cadeia",
+        "certificado",
+        "raiz",
+        "assinar",
+        "decisao"
+      ]
+    },
+    {
+      "id": "meet-microfone",
+      "arquivo": "audiencias-meet.md",
+      "secao": "Microfone sem Captação",
+      "grupo": "meet-microfone",
+      "so": [
+        "windows",
+        "linux"
+      ],
+      "categoria": "HARDWARE",
+      "sistema": "COMPUTER",
+      "ferramenta": "run_meet_check",
+      "fortes": [
+        "microfone",
+        "ninguem nos ouve",
+        "ninguem ouve",
+        "nao nos ouve",
+        "nao ouvem",
+        "nao escutam",
+        "captando nossa voz",
+        "captar a voz"
+      ],
+      "termos": [
+        "jabra",
+        "voz",
+        "audio",
+        "mudo",
+        "meet",
+        "audiencia"
+      ]
+    },
+    {
+      "id": "meet-camera",
+      "arquivo": "audiencias-meet.md",
+      "secao": "Câmera com Tela Preta",
+      "grupo": "meet-camera",
+      "so": [
+        "windows",
+        "linux"
+      ],
+      "categoria": "HARDWARE",
+      "sistema": "COMPUTER",
+      "ferramenta": "run_meet_check",
+      "fortes": [
+        "camera",
+        "webcam",
+        "imagem congela",
+        "congela a imagem",
+        "camera integrada"
+      ],
+      "termos": [
+        "tela preta",
+        "video",
+        "imagem",
+        "meet",
+        "audiencia",
+        "videoconferencia"
+      ]
+    },
+    {
+      "id": "meet-eco",
+      "arquivo": "audiencias-meet.md",
+      "secao": "Eco e Microfonia",
+      "grupo": "meet-eco",
+      "so": [
+        "windows",
+        "linux"
+      ],
+      "categoria": "HARDWARE",
+      "sistema": "COMPUTER",
+      "ferramenta": "run_meet_check",
+      "fortes": [
+        "eco",
+        "microfonia",
+        "estridente",
+        "apito",
+        "audio volta",
+        "retorno de audio"
+      ],
+      "termos": [
+        "retorno",
+        "meet",
+        "audiencia",
+        "som"
+      ]
+    },
+    {
+      "id": "meet-permissao",
+      "arquivo": "audiencias-complemento.md",
+      "secao": "Navegador Bloqueou a Câmera",
+      "grupo": "meet-permissao",
+      "so": [
+        "windows",
+        "linux"
+      ],
+      "categoria": "HARDWARE",
+      "sistema": "COMPUTER",
+      "ferramenta": "run_meet_check",
+      "fortes": [
+        "bloqueados para este site",
+        "bloqueado para este site",
+        "permissao de camera",
+        "permissao do microfone",
+        "permissao de microfone",
+        "camera e o microfone estao bloqueados",
+        "aviso vermelho",
+        "permitir camera"
+      ],
+      "termos": [
+        "bloqueado",
+        "bloqueados",
+        "bloqueou",
+        "permissao",
+        "chrome",
+        "navegador",
+        "camera",
+        "microfone"
+      ]
+    },
+    {
+      "id": "meet-conexao",
+      "arquivo": "audiencias-complemento.md",
+      "secao": "Conexão Caindo ou Participantes",
+      "grupo": "meet-conexao",
+      "so": [
+        "windows",
+        "linux"
+      ],
+      "categoria": "NETWORK",
+      "sistema": "INTERNET",
+      "ferramenta": "run_meet_check",
+      "fortes": [
+        "robotico",
+        "roboticos",
+        "robotica",
+        "participantes ficam",
+        "tela do google meet trava",
+        "cai durante a audiencia",
+        "conexao cai"
+      ],
+      "termos": [
+        "wi-fi",
+        "wifi",
+        "travando",
+        "trava",
+        "oscilando",
+        "meet",
+        "audiencia",
+        "cabo de rede"
+      ]
+    },
+    {
+      "id": "rede-wifi",
+      "arquivo": "infra-redes.md",
+      "secao": "Conexão Oscilando",
+      "grupo": "rede-conexao",
+      "so": [
+        "windows"
+      ],
+      "categoria": "NETWORK",
+      "sistema": "INTERNET",
+      "fortes": [
+        "wi-fi",
+        "wifi",
+        "sem fio",
+        "oscilando",
+        "instavel",
+        "desconectando",
+        "tjpa-corporativo",
+        "sinal fraco"
+      ],
+      "termos": [
+        "internet",
+        "rede",
+        "conexao",
+        "cai",
+        "caindo",
+        "sinal"
+      ]
+    },
+    {
+      "id": "rede-sem-conexao",
+      "arquivo": "rede-conexao.md",
+      "secao": "Estação Sem Rede",
+      "grupo": "rede-conexao",
+      "so": [
+        "windows",
+        "linux"
+      ],
+      "categoria": "NETWORK",
+      "sistema": "INTERNET",
+      "fortes": [
+        "sem internet",
+        "sem rede",
+        "perdeu conexao",
+        "perdeu a conexao",
+        "icone de globo",
+        "globo com um corte",
+        "sem conexao",
+        "nao abre nenhum site"
+      ],
+      "termos": [
+        "rede",
+        "internet",
+        "conexao",
+        "cabo de rede",
+        "nao abre"
+      ]
+    },
+    {
+      "id": "rede-dns",
+      "arquivo": "infra-redes.md",
+      "secao": "Falha na Resolução de DNS",
+      "grupo": "rede-dns",
+      "so": [
+        "windows"
+      ],
+      "categoria": "NETWORK",
+      "sistema": "INTERNET",
+      "fortes": [
+        "dns",
+        "resolucao de nomes",
+        "nao resolve",
+        "google abre"
+      ],
+      "termos": [
+        "timeout",
+        "portal",
+        "site nao abre",
+        "pje.tjpa.jus.br"
+      ]
+    },
+    {
+      "id": "impressao-spooler",
+      "arquivo": "impressao-hardware.md",
+      "secao": "Documentos Travados na Fila",
+      "grupo": "impressao",
+      "so": [
+        "windows"
+      ],
+      "categoria": "PRINTING",
+      "sistema": "PRINTER",
+      "fortes": [
+        "impressora",
+        "imprimir",
+        "impressao",
+        "fila de impressao",
+        "spooler",
+        "erro - imprimindo"
+      ],
+      "termos": [
+        "certidoes",
+        "mandados",
+        "etiquetas",
+        "nada sai",
+        "fila"
+      ]
+    },
+    {
+      "id": "hardware-nao-liga",
+      "arquivo": "impressao-hardware.md",
+      "secao": "Computador Não Liga",
+      "grupo": "hardware-energia",
+      "so": [
+        "windows",
+        "linux"
+      ],
+      "categoria": "HARDWARE",
+      "sistema": "COMPUTER",
+      "equipamento": "Desktop",
+      "escalar": true,
+      "fortes": [
+        "nao liga",
+        "nao acende",
+        "queda de energia",
+        "nenhuma luz",
+        "ventilador",
+        "fonte queimada",
+        "nao inicia",
+        "nao da sinal de vida"
+      ],
+      "termos": [
+        "botao de ligar",
+        "energia",
+        "fonte",
+        "computador"
+      ]
+    },
+    {
+      "id": "email-cota",
+      "arquivo": "sistemas-corporativos.md",
+      "secao": "E-mail com Cota Excedida",
+      "grupo": "email-cota",
+      "so": [
+        "windows",
+        "linux"
+      ],
+      "categoria": "SYSTEM",
+      "sistema": "EMAIL",
+      "fortes": [
+        "cota",
+        "quota",
+        "mailbox",
+        "caixa cheia",
+        "caixa de entrada cheia",
+        "552",
+        "size limit",
+        "limite de armazenamento"
+      ],
+      "termos": [
+        "email",
+        "e-mail",
+        "zimbra",
+        "outlook",
+        "intimacoes",
+        "nao estou recebendo",
+        "liberar espaco"
+      ]
+    },
+    {
+      "id": "senha-expirada",
+      "arquivo": "sistemas-corporativos.md",
+      "secao": "Senha de Rede Expirada",
+      "grupo": "senha-conta",
+      "so": [
+        "windows",
+        "linux"
+      ],
+      "categoria": "ACCESS",
+      "sistema": "OTHER",
+      "fortes": [
+        "senha expirou",
+        "senha expirada",
+        "conta bloqueada",
+        "conta bloqueou",
+        "excesso de tentativas",
+        "requisitos de complexidade",
+        "redefinir senha",
+        "trocar a senha",
+        "esqueci a senha",
+        "esqueci minha senha"
+      ],
+      "termos": [
+        "senha",
+        "login",
+        "bloqueada",
+        "bloqueou",
+        "dominio",
+        "desbloquear"
+      ]
+    },
+    {
+      "id": "pje-lentidao",
+      "arquivo": "sistemas-web.md",
+      "secao": "PJe Lento ou em Branco",
+      "grupo": "pje-lentidao",
+      "so": [
+        "windows",
+        "linux"
+      ],
+      "categoria": "SYSTEM",
+      "sistema": "PJE",
+      "fortes": [
+        "carregando documento",
+        "autos",
+        "paginas",
+        "tela branca",
+        "pje lento",
+        "pje esta lento",
+        "pje muito lento",
+        "demora para abrir",
+        "abrir os autos",
+        "abrir autos",
+        "autos no pje",
+        "lento no pje"
+      ],
+      "termos": [
+        "pje",
+        "lento",
+        "lentidao",
+        "demora",
+        "minuta",
+        "documento"
+      ]
+    },
+    {
+      "id": "navegador-pdf",
+      "arquivo": "sistemas-web.md",
+      "secao": "Navegador Fecha ou Trava ao Abrir PDF",
+      "grupo": "navegador-pdf",
+      "so": [
+        "windows",
+        "linux"
+      ],
+      "categoria": "SOFTWARE",
+      "sistema": "OTHER",
+      "fortes": [
+        "pdf",
+        "ah, nao",
+        "aw, snap",
+        "navegador fecha",
+        "fecha sozinho",
+        "aba trava",
+        "ocorreu um erro"
+      ],
+      "termos": [
+        "chrome",
+        "firefox",
+        "navegador",
+        "anexo",
+        "pje"
+      ]
+    },
+    {
+      "id": "pje-sessao",
+      "arquivo": "sistemas-web.md",
+      "secao": "Sessão do PJe Expirando",
+      "grupo": "pje-sessao",
+      "so": [
+        "windows",
+        "linux"
+      ],
+      "categoria": "ACCESS",
+      "sistema": "PJE",
+      "fortes": [
+        "sessao expirou",
+        "sessao expirada",
+        "faca login novamente",
+        "deslogando",
+        "desloga sozinho",
+        "perdeu o texto"
+      ],
+      "termos": [
+        "pje",
+        "pop-up",
+        "login",
+        "sessao",
+        "votos"
+      ]
+    },
+    {
+      "id": "portal-erro-5xx",
+      "arquivo": "sistemas-web.md",
+      "secao": "Portal ou Sistema com Erro 502",
+      "grupo": "portal-erro-5xx",
+      "so": [
+        "windows",
+        "linux"
+      ],
+      "categoria": "SYSTEM",
+      "sistema": "OTHER",
+      "fortes": [
+        "502",
+        "503",
+        "504",
+        "bad gateway",
+        "service unavailable",
+        "pagina branca",
+        "servico indisponivel",
+        "fora do ar"
+      ],
+      "termos": [
+        "portal",
+        "custas",
+        "boleto",
+        "guias",
+        "sistema",
+        "site"
+      ]
+    },
+    {
+      "id": "pje-assinatura-lote",
+      "arquivo": "sistemas-web.md",
+      "secao": "Assinatura em Lote Trava",
+      "grupo": "pje-assinatura-lote",
+      "so": [
+        "windows",
+        "linux"
+      ],
+      "categoria": "SYSTEM",
+      "sistema": "PJE",
+      "fortes": [
+        "assinar em lote",
+        "assinatura em lote",
+        "em lote",
+        "barra de progresso",
+        "loop infinito"
+      ],
+      "termos": [
+        "despachos",
+        "assinar",
+        "assinou",
+        "nao conclui",
+        "lote"
+      ]
+    },
+    {
+      "id": "estacao-lenta",
+      "arquivo": "estacao-desempenho.md",
+      "secao": "Computador Lento",
+      "grupo": "estacao-lenta",
+      "so": [
+        "windows",
+        "linux"
+      ],
+      "categoria": "HARDWARE",
+      "sistema": "COMPUTER",
+      "fortes": [
+        "lentidao",
+        "devagar",
+        "demorando",
+        "computador travando",
+        "muito lento",
+        "memoria cheia"
+      ],
+      "termos": [
+        "lento",
+        "computador",
+        "maquina",
+        "estacao",
+        "travando",
+        "programas",
+        "abrir"
+      ]
+    },
+    {
+      "id": "disco-cheio",
+      "arquivo": "estacao-desempenho.md",
+      "secao": "Pouco Espaço em Disco",
+      "grupo": "disco-cheio",
+      "so": [
+        "windows",
+        "linux"
+      ],
+      "categoria": "HARDWARE",
+      "sistema": "COMPUTER",
+      "fortes": [
+        "espaco em disco",
+        "pouco espaco",
+        "disco cheio",
+        "disco local",
+        "sem espaco",
+        "falta de espaco",
+        "ficando sem espaco"
+      ],
+      "termos": [
+        "download",
+        "baixar",
+        "armazenamento",
+        "c:",
+        "disco"
+      ]
+    },
+    {
+      "id": "monitor-sem-sinal",
+      "arquivo": "perifericos.md",
+      "secao": "Monitor Sem Sinal",
+      "grupo": "monitor-sem-sinal",
+      "so": [
+        "windows",
+        "linux"
+      ],
+      "categoria": "HARDWARE",
+      "sistema": "COMPUTER",
+      "escalar": true,
+      "fortes": [
+        "monitor",
+        "segunda tela",
+        "duas telas",
+        "no signal",
+        "sem sinal de video",
+        "hdmi",
+        "displayport",
+        "tela nao liga"
+      ],
+      "termos": [
+        "tela",
+        "luz laranja",
+        "video",
+        "cabo"
+      ]
+    },
+    {
+      "id": "teclado-mouse",
+      "arquivo": "perifericos.md",
+      "secao": "Teclado ou Mouse",
+      "grupo": "teclado-mouse",
+      "so": [
+        "windows",
+        "linux"
+      ],
+      "categoria": "HARDWARE",
+      "sistema": "COMPUTER",
+      "fortes": [
+        "teclado",
+        "mouse",
+        "ponteiro",
+        "engole letras",
+        "repete caracteres",
+        "repetindo letras"
+      ],
+      "termos": [
+        "usb",
+        "travando",
+        "congelando",
+        "camera lenta"
+      ]
+    },
+    {
+      "id": "scanner",
+      "arquivo": "perifericos.md",
+      "secao": "Scanner Não Reconhecido",
+      "grupo": "scanner",
+      "so": [
+        "windows",
+        "linux"
+      ],
+      "categoria": "HARDWARE",
+      "sistema": "OTHER",
+      "fortes": [
+        "scanner",
+        "digitalizar",
+        "digitalizacao",
+        "fujitsu",
+        "paperstream"
+      ],
+      "termos": [
+        "ocupado por outro aplicativo",
+        "nao reconhece",
+        "nao e reconhecido",
+        "pecas fisicas"
+      ]
+    },
+    {
+      "id": "audio-saida",
+      "arquivo": "perifericos.md",
+      "secao": "Som Não Sai nas Caixas",
+      "grupo": "audio-saida",
+      "so": [
+        "windows",
+        "linux"
+      ],
+      "categoria": "HARDWARE",
+      "sistema": "COMPUTER",
+      "fortes": [
+        "nao sai som",
+        "nao sai nenhum som",
+        "sem som",
+        "caixas de som",
+        "caixa de som",
+        "alto-falante",
+        "alto falante",
+        "caixas externas",
+        "som ambiente"
+      ],
+      "termos": [
+        "som",
+        "fones",
+        "volume",
+        "audio"
+      ]
+    },
+    {
+      "id": "notebook-energia",
+      "arquivo": "perifericos.md",
+      "secao": "Notebook Desligou Sozinho",
+      "grupo": "notebook-energia",
+      "so": [
+        "windows",
+        "linux"
+      ],
+      "categoria": "HARDWARE",
+      "sistema": "COMPUTER",
+      "equipamento": "Notebook",
+      "fortes": [
+        "desligou sozinho",
+        "desligou repentinamente",
+        "desligou de repente",
+        "bateria",
+        "sem a fonte",
+        "carregador"
+      ],
+      "termos": [
+        "notebook",
+        "desligou",
+        "tomada",
+        "energia"
+      ]
+    },
+    {
+      "id": "pjeoffice-conexao-linux",
+      "arquivo": "ubuntu-linux.md",
+      "secao": "PJeOffice Pro Não Inicia",
+      "grupo": "pjeoffice",
+      "so": [
+        "linux"
+      ],
+      "categoria": "SYSTEM",
+      "sistema": "PJE",
+      "fortes": [
+        "pjeoffice",
+        "pjeoffice-pro",
+        "8800",
+        "openjdk",
+        "daemon do pjeoffice"
+      ],
+      "termos": [
+        "java",
+        "systemd",
+        "assinador",
+        "assinar",
+        "instalacao"
+      ]
+    },
+    {
+      "id": "token-a3-linux",
+      "arquivo": "ubuntu-linux.md",
+      "secao": "Token A3 Não Reconhecido",
+      "grupo": "token-a3",
+      "so": [
+        "linux"
+      ],
+      "categoria": "HARDWARE",
+      "sistema": "COMPUTER",
+      "fortes": [
+        "token",
+        "a3",
+        "pcscd",
+        "pcsc",
+        "safesign",
+        "cartao inteligente"
+      ],
+      "termos": [
+        "certificado",
+        "usb",
+        "pin"
+      ]
+    },
+    {
+      "id": "cadeia-icp-linux",
+      "arquivo": "ubuntu-linux.md",
+      "secao": "Cadeia ICP-Brasil Não Confiável",
+      "grupo": "cadeia-icp",
+      "so": [
+        "linux"
+      ],
+      "categoria": "SYSTEM",
+      "sistema": "PJE",
+      "fortes": [
+        "cadeia de certificacao",
+        "icp-brasil",
+        "icp brasil",
+        "raiz nao confiavel",
+        "nao confiavel"
+      ],
+      "termos": [
+        "cadeia",
+        "certificado",
+        "raiz"
+      ]
+    },
+    {
+      "id": "rede-wifi-linux",
+      "arquivo": "ubuntu-linux.md",
+      "secao": "Wi-Fi Instável ou Sem Rede",
+      "grupo": "rede-conexao",
+      "so": [
+        "linux"
+      ],
+      "categoria": "NETWORK",
+      "sistema": "INTERNET",
+      "fortes": [
+        "wi-fi",
+        "wifi",
+        "sem rede",
+        "oscilando",
+        "instavel",
+        "nmcli",
+        "networkmanager",
+        "interface wireless"
+      ],
+      "termos": [
+        "internet",
+        "rede",
+        "conexao",
+        "sinal"
+      ]
+    },
+    {
+      "id": "rede-dns-linux",
+      "arquivo": "ubuntu-linux.md",
+      "secao": "Falha de Resolução DNS",
+      "grupo": "rede-dns",
+      "so": [
+        "linux"
+      ],
+      "categoria": "NETWORK",
+      "sistema": "INTERNET",
+      "fortes": [
+        "dns",
+        "resolvectl",
+        "systemd-resolved",
+        "10.1.1.10",
+        "resolucao de nomes"
+      ],
+      "termos": [
+        "timeout",
+        "zona",
+        "portal",
+        "lentidao na abertura"
+      ]
+    },
+    {
+      "id": "impressao-cups",
+      "arquivo": "ubuntu-linux.md",
+      "secao": "Fila de Impressão Travada",
+      "grupo": "impressao",
+      "so": [
+        "linux"
+      ],
+      "categoria": "PRINTING",
+      "sistema": "PRINTER",
+      "fortes": [
+        "impressora",
+        "imprimir",
+        "impressao",
+        "cups",
+        "lpstat",
+        "fila de impressao"
+      ],
+      "termos": [
+        "fila",
+        "nada sai"
+      ]
+    },
+    {
+      "id": "vpn-rota-linux",
+      "arquivo": "ubuntu-linux.md",
+      "secao": "VPN Conecta mas a Rota",
+      "grupo": "vpn",
+      "so": [
+        "linux"
+      ],
+      "categoria": "NETWORK",
+      "sistema": "INTERNET",
+      "fortes": [
+        "vpn",
+        "openvpn",
+        "rota interna",
+        "tunel",
+        "10.20.0.1",
+        "gateway de administracao"
+      ],
+      "termos": [
+        "rota",
+        "certificados corporativos",
+        "contingencia"
+      ]
+    },
+    {
+      "id": "script-permissao-linux",
+      "arquivo": "ubuntu-linux.md",
+      "secao": "Script de Diagnóstico Falha",
+      "grupo": "script-permissao",
+      "so": [
+        "linux"
+      ],
+      "categoria": "SOFTWARE",
+      "sistema": "OTHER",
+      "fortes": [
+        "permission denied",
+        "sem privilegios",
+        "privilegios de rede",
+        "script",
+        "bash"
+      ],
+      "termos": [
+        "permissao",
+        "terminal",
+        "interface wireless",
+        "pre-diagnostico"
+      ]
+    },
+    {
+      "id": "tls-ca-interna",
+      "arquivo": "ubuntu-linux.md",
+      "secao": "Erro de Certificado TLS",
+      "grupo": "tls-ca",
+      "so": [
+        "linux"
+      ],
+      "categoria": "SOFTWARE",
+      "sistema": "OTHER",
+      "fortes": [
+        "certificate verify failed",
+        "ssl handshake",
+        "handshake",
+        "autoridade certificadora interna",
+        "autoassinado",
+        "tls",
+        "ssl"
+      ],
+      "termos": [
+        "certificado",
+        "webhook",
+        "zabbix",
+        "endpoint"
+      ]
+    },
+    {
+      "id": "api-oauth-401",
+      "arquivo": "ubuntu-linux.md",
+      "secao": "Token OAuth2 de Integração",
+      "grupo": "api-oauth",
+      "so": [
+        "linux"
+      ],
+      "categoria": "SOFTWARE",
+      "sistema": "OTHER",
+      "fortes": [
+        "oauth",
+        "oauth2",
+        "http 401",
+        "client credentials",
+        "cabecalho malformado",
+        "bearer"
+      ],
+      "termos": [
+        "401",
+        "token",
+        "renovacao",
+        "api",
+        "glpi",
+        "curl"
+      ]
+    }
+  ]
+}

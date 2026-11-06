@@ -1,0 +1,35 @@
+services:
+  mariadb:
+    image: mariadb:11.4
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:-local-root-change-this}
+      MARIADB_DATABASE: ${MYSQL_REGISTRY_DATABASE:-judicia_registry}
+      MARIADB_USER: judici_app
+      MARIADB_PASSWORD: ${MYSQL_PASSWORD:-local-app-change-this}
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+    volumes:
+      - judicia_mariadb_data:/var/lib/mysql
+      - ./scripts/mariadb-init.sql:/docker-entrypoint-initdb.d/10-multitenancy.sql:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  phpmyadmin:
+    image: phpmyadmin:5
+    restart: unless-stopped
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    environment:
+      PMA_HOST: mariadb
+      PMA_PORT: 3306
+      PMA_USER: judici_app
+      PMA_PASSWORD: ${MYSQL_PASSWORD:-local-app-change-this}
+    ports:
+      - "${PHPMYADMIN_PORT:-8081}:80"
+
+volumes:
+  judicia_mariadb_data:

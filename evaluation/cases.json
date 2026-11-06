@@ -1,0 +1,516 @@
+[
+  {
+    "id": "pje_acesso_individual",
+    "text": "Não estou conseguindo acessar o PJe; aparece uma mensagem de erro somente para mim.",
+    "expected": {
+      "supportRequest": true,
+      "category": "ACCESS",
+      "system": "PJE",
+      "possibleIncident": false
+    }
+  },
+  {
+    "id": "pje_indisponibilidade_coletiva",
+    "text": "O PJe está indisponível para várias pessoas da unidade e ninguém consegue consultar processos.",
+    "expected": {
+      "supportRequest": true,
+      "category": "SYSTEM",
+      "system": "PJE",
+      "impact": "HIGH",
+      "possibleIncident": true,
+      "outage": true
+    }
+  },
+  {
+    "id": "impressora",
+    "text": "A impressora do setor não imprime e os documentos ficam parados na fila.",
+    "expected": {
+      "supportRequest": true,
+      "category": "PRINTING",
+      "system": "PRINTER",
+      "possibleIncident": false
+    }
+  },
+  {
+    "id": "rede_unidade",
+    "text": "A internet caiu para toda a unidade; vários computadores estão sem conexão.",
+    "expected": {
+      "supportRequest": true,
+      "category": "NETWORK",
+      "system": "INTERNET",
+      "impact": "HIGH",
+      "possibleIncident": true,
+      "outage": true
+    }
+  },
+  {
+    "id": "senha",
+    "text": "Esqueci a senha da minha conta institucional e não consigo entrar.",
+    "expected": { "supportRequest": true, "category": "ACCESS" }
+  },
+  {
+    "id": "computador_nao_liga",
+    "text": "Meu computador não liga desde hoje de manhã.",
+    "expected": { "supportRequest": true, "category": "HARDWARE", "system": "COMPUTER" }
+  },
+  {
+    "id": "email",
+    "text": "Não consigo enviar nem receber mensagens no e-mail institucional.",
+    "expected": { "supportRequest": true, "category": "SYSTEM", "system": "EMAIL" }
+  },
+  {
+    "id": "fora_escopo_advogado",
+    "text": "Preciso ir para casa do meu advogado.",
+    "expected": { "supportRequest": false }
+  },
+  {
+    "id": "fora_escopo_duvida_juridica",
+    "text": "Qual é o prazo para apresentar recurso neste processo?",
+    "expected": { "supportRequest": false }
+  },
+  {
+    "id": "mensagem_vaga",
+    "text": "Não está funcionando e preciso de ajuda.",
+    "expected": { "status": "NEEDS_REVIEW" }
+  },
+  {
+    "id": "impressora_atolada",
+    "text": "A impressora da recepção atolou o papel e não conclui a impressão.",
+    "expected": {
+      "supportRequest": true,
+      "category": "PRINTING",
+      "system": "PRINTER",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "fila_impressao_parada",
+    "text": "Os documentos ficam presos na fila de impressão da impressora do gabinete.",
+    "expected": {
+      "supportRequest": true,
+      "category": "PRINTING",
+      "system": "PRINTER",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "toner_impressora",
+    "text": "A impressora está ligada, mas não imprime após a troca do toner.",
+    "expected": {
+      "supportRequest": true,
+      "category": "PRINTING",
+      "system": "PRINTER",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "impressao_falha",
+    "text": "Preciso de suporte: a impressão sai em branco na impressora do setor.",
+    "expected": {
+      "supportRequest": true,
+      "category": "PRINTING",
+      "system": "PRINTER",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "impressora_sem_conexao",
+    "text": "A impressora de rede aparece offline e não recebe os trabalhos.",
+    "expected": {
+      "supportRequest": true,
+      "category": "PRINTING",
+      "system": "PRINTER",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "instalar_impressora",
+    "text": "Solicito ajuda para configurar a impressora no computador.",
+    "expected": {
+      "supportRequest": true,
+      "category": "PRINTING",
+      "system": "PRINTER",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "wifi_instavel",
+    "text": "O Wi-Fi da minha estação cai várias vezes durante o dia.",
+    "expected": {
+      "supportRequest": true,
+      "category": "NETWORK",
+      "system": "INTERNET",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "sem_internet_individual",
+    "text": "Estou sem conexão com a internet no meu computador.",
+    "expected": {
+      "supportRequest": true,
+      "category": "NETWORK",
+      "system": "INTERNET",
+      "possibleIncident": false,
+      "outage": true
+    }
+  },
+  {
+    "id": "rede_toda_unidade",
+    "text": "A rede caiu para toda a unidade e vários computadores ficaram sem conexão.",
+    "expected": {
+      "supportRequest": true,
+      "category": "NETWORK",
+      "system": "INTERNET",
+      "possibleIncident": true,
+      "outage": true
+    }
+  },
+  {
+    "id": "wifi_setor",
+    "text": "O Wi-Fi está indisponível para todos os usuários do setor.",
+    "expected": {
+      "supportRequest": true,
+      "category": "NETWORK",
+      "system": "INTERNET",
+      "possibleIncident": true,
+      "outage": true
+    }
+  },
+  {
+    "id": "rede_lenta",
+    "text": "A conexão de rede está lenta apenas na minha estação de trabalho.",
+    "expected": {
+      "supportRequest": true,
+      "category": "NETWORK",
+      "system": "INTERNET",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "internet_comarcas",
+    "text": "A internet caiu em mais de uma comarca e ninguém consegue acessar os serviços.",
+    "expected": {
+      "supportRequest": true,
+      "category": "NETWORK",
+      "system": "INTERNET",
+      "possibleIncident": true,
+      "outage": true
+    }
+  },
+  {
+    "id": "computador_nao_inicia",
+    "text": "Meu computador não inicia depois da atualização.",
+    "expected": {
+      "supportRequest": true,
+      "category": "HARDWARE",
+      "system": "COMPUTER",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "notebook_travado",
+    "text": "O notebook travou e não responde ao teclado nem ao mouse.",
+    "expected": {
+      "supportRequest": true,
+      "category": "HARDWARE",
+      "system": "COMPUTER",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "tela_azul_pc",
+    "text": "O computador apresenta tela azul quando ligo a estação de trabalho.",
+    "expected": {
+      "supportRequest": true,
+      "category": "HARDWARE",
+      "system": "COMPUTER",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "pc_desliga",
+    "text": "Meu PC desliga sozinho depois de alguns minutos de uso.",
+    "expected": {
+      "supportRequest": true,
+      "category": "HARDWARE",
+      "system": "COMPUTER",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "computador_lento",
+    "text": "O computador da minha mesa está muito lento para abrir os sistemas.",
+    "expected": {
+      "supportRequest": true,
+      "category": "HARDWARE",
+      "system": "COMPUTER",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "pje_acesso_unico",
+    "text": "Não consigo acessar o PJe; sou a única pessoa com esse erro.",
+    "expected": {
+      "supportRequest": true,
+      "category": "ACCESS",
+      "system": "PJE",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "pje_login",
+    "text": "Meu login do PJe não autentica e preciso consultar um processo.",
+    "expected": {
+      "supportRequest": true,
+      "category": "ACCESS",
+      "system": "PJE",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "pje_senha",
+    "text": "A senha do PJe é recusada mesmo depois de digitá-la novamente.",
+    "expected": {
+      "supportRequest": true,
+      "category": "ACCESS",
+      "system": "PJE",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "pje_certificado_acesso",
+    "text": "O PJe apresenta falha de acesso ao validar meu certificado digital.",
+    "expected": {
+      "supportRequest": true,
+      "category": "ACCESS",
+      "system": "PJE",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "pje_erro_pagina",
+    "text": "O PJe mostra uma página de erro quando tento consultar processos.",
+    "expected": {
+      "supportRequest": true,
+      "category": "SYSTEM",
+      "system": "PJE",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "pje_tela_branca",
+    "text": "A tela do PJe fica branca depois que faço login.",
+    "expected": {
+      "supportRequest": true,
+      "category": "SYSTEM",
+      "system": "PJE",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "pje_unidade_indisponivel",
+    "text": "O PJe está fora do ar para toda a unidade; ninguém consegue trabalhar.",
+    "expected": {
+      "supportRequest": true,
+      "category": "SYSTEM",
+      "system": "PJE",
+      "possibleIncident": true,
+      "outage": true
+    }
+  },
+  {
+    "id": "pje_lentidao_coletiva",
+    "text": "O PJe está muito lento para vários usuários do setor ao mesmo tempo.",
+    "expected": {
+      "supportRequest": true,
+      "category": "SYSTEM",
+      "system": "PJE",
+      "possibleIncident": true,
+      "outage": false
+    }
+  },
+  {
+    "id": "sei_acesso",
+    "text": "Não consigo acessar o SEI porque minha senha não é aceita.",
+    "expected": {
+      "supportRequest": true,
+      "category": "ACCESS",
+      "system": "SEI",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "sei_login_bloqueado",
+    "text": "Meu login do SEI está bloqueado e preciso de suporte para entrar.",
+    "expected": {
+      "supportRequest": true,
+      "category": "ACCESS",
+      "system": "SEI",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "email_nao_envia",
+    "text": "O e-mail institucional não envia mensagens para nenhum destinatário.",
+    "expected": {
+      "supportRequest": true,
+      "category": "SYSTEM",
+      "system": "EMAIL",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "email_caixa",
+    "text": "Não consigo receber mensagens no correio eletrônico institucional.",
+    "expected": {
+      "supportRequest": true,
+      "category": "SYSTEM",
+      "system": "EMAIL",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "outlook_erro",
+    "text": "O Outlook apresenta erro quando abro o e-mail do Tribunal.",
+    "expected": {
+      "supportRequest": true,
+      "category": "SYSTEM",
+      "system": "EMAIL",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "duvida_prazo_recurso",
+    "text": "Qual é o prazo legal para apresentar um recurso neste processo?",
+    "expected": {
+      "supportRequest": false,
+      "category": "OTHER",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "revisar_peticao",
+    "text": "Preciso revisar uma petição antes de protocolar no processo.",
+    "expected": {
+      "supportRequest": false,
+      "category": "OTHER",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "consultar_advogado",
+    "text": "Como posso falar com meu advogado sobre a audiência?",
+    "expected": {
+      "supportRequest": false,
+      "category": "OTHER",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "interpretar_sentenca",
+    "text": "Quero entender o que significa a sentença publicada no processo.",
+    "expected": {
+      "supportRequest": false,
+      "category": "OTHER",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "custas_judiciais",
+    "text": "Onde consulto o valor das custas judiciais deste processo?",
+    "expected": {
+      "supportRequest": false,
+      "category": "OTHER",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "marcar_audiencia",
+    "text": "Preciso saber como remarcar uma audiência com o juiz.",
+    "expected": {
+      "supportRequest": false,
+      "category": "OTHER",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "duvida_decisao",
+    "text": "Tenho uma dúvida sobre a decisão judicial e o prazo de manifestação.",
+    "expected": {
+      "supportRequest": false,
+      "category": "OTHER",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "documento_processo",
+    "text": "Como anexo um documento à petição do processo?",
+    "expected": {
+      "supportRequest": false,
+      "category": "OTHER",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "visitar_advogado",
+    "text": "Preciso ir para a casa do meu advogado para assinar documentos.",
+    "expected": {
+      "supportRequest": false,
+      "category": "OTHER",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "informacao_comarca",
+    "text": "Qual é o endereço do fórum da comarca onde tramita meu processo?",
+    "expected": {
+      "supportRequest": false,
+      "category": "OTHER",
+      "possibleIncident": false,
+      "outage": false
+    }
+  },
+  {
+    "id": "orientacao_juridica",
+    "text": "Preciso de orientação jurídica para responder à intimação recebida.",
+    "expected": {
+      "supportRequest": false,
+      "category": "OTHER",
+      "possibleIncident": false,
+      "outage": false
+    }
+  }
+]

@@ -1,0 +1,1 @@
+export const tenantTables = ['app_users','app_sessions','knowledge_articles','requests','decisions','tickets','incidents','incident_tickets','service_events','ticket_status_history','request_feedback','evaluation_cases','app_settings','service_localities'];

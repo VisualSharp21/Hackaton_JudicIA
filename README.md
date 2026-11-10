@@ -1,6 +1,77 @@
-# Pulso TIC — MVP conectado
+# JudicIA — AI-assisted Technical Support for Virtual Hearings
 
-Aplicação web demonstrativa para triagem e autoatendimento, com interface separada da API Node.js, persistência MariaDB e integração opcional com Laya ou Jev.
+Projeto desenvolvido no contexto do **1º Hackathon TJPA**, com foco em prevenção de falhas, suporte N1 assistido por IA e automação do diagnóstico técnico de audiências virtuais.
+
+A solução combina **Engenharia de Software, LLMs, RAG, automação, integração com GLPI e monitoramento preventivo** para reduzir tarefas repetitivas de suporte e entregar mais contexto à equipe técnica quando a intervenção humana é necessária.
+
+## Visão geral
+
+O fluxo principal foi pensado para agir antes e durante uma audiência:
+
+```text
+Audiência agendada
+        ↓
+Pré-check técnico
+        ↓
+Rede / câmera / microfone
+        ↓
+Problema detectado?
+    ↙             ↘
+   não             sim
+    ↓               ↓
+  pronto        Copilot N1
+                    ↓
+          LLM / regras locais
+                    ↓
+       RAG + memória + ferramentas
+                    ↓
+          solução recomendada
+                    ↓
+              resolveu?
+            ↙         ↘
+          sim          não
+           ↓            ↓
+      registra      GLPI / suporte
+     atendimento    com contexto
+```
+
+## Minha contribuição
+
+Participei do desenvolvimento e evolução do MVP durante o 1º Hackathon TJPA, com foco em:
+
+- definição e refinamento do fluxo de pré-audiência;
+- diagnóstico preventivo de conectividade, câmera e microfone;
+- estruturação do fluxo de triagem e suporte N1;
+- experimentação com LLMs e agentes de IA;
+- integração entre copiloto, base de conhecimento e fluxo de chamados;
+- testes e evolução da experiência do usuário;
+- discussão da arquitetura e do comportamento esperado do sistema.
+
+> Este é um projeto desenvolvido em equipe. A seção acima destaca as áreas em que tive participação direta ou colaboração durante a construção do MVP.
+
+## Stack e conceitos
+
+- Node.js
+- JavaScript
+- MariaDB
+- Prisma
+- Docker
+- LLMs
+- RAG
+- agentes e ferramentas
+- GLPI
+- Zabbix
+- autenticação e controle de acesso
+- testes automatizados
+- avaliação de triagem
+
+## Screenshots
+
+As capturas de tela da aplicação serão adicionadas nesta seção em uma próxima atualização do portfólio.
+
+---
+
+## Documentação técnica
 
 ## Executar localmente no Windows
 
@@ -99,4 +170,3 @@ Na interface, **Configuração da triagem** permite ajustar instruções e descr
 As correções humanas podem ser aprovadas como exemplos pela tela **Qualidade**. Revise e anonimize o texto antes de aprová-lo. Use **Avaliar feedback** nessa tela para classificar os exemplos ainda não avaliados com o provedor configurado e consultar a concordância por campo e as divergências. Cada caso avaliado com sucesso é preservado e não é executado de novo; alterações no texto ou nos rótulos criam uma nova versão para avaliação. Essa avaliação fica separada do benchmark-base e não altera o modelo. A exportação JSON e `npm run evaluate:classifier` continuam disponíveis para avaliação local por CLI; para esse script, copie o JSON exportado para `evaluation/feedback.local.json`.
 
 A automação permanece desativada por padrão (`TRIAGE_AUTOMATION_APPROVED=false`). Os casos atuais exercitam regras do protótipo e não substituem uma validação independente por especialistas. Prioridade e detecção de incidentes são parâmetros experimentais; nenhum sistema real do Tribunal é contatado.
-# Pulso TIC
